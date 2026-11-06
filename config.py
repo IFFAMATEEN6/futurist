@@ -2,12 +2,13 @@
 
 """
 import os
-from datetime import date
+from datetime import datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(Path(__file__).resolve().parent / ".env")
 
 
 def _env_int(name: str, default: int) -> int:
@@ -39,8 +40,9 @@ CACHE_DIR = BASE_DIR / "cache"
 # ---------- run behaviour ----------
 # "Today" for every deadline check. Set TODAY_OVERRIDE in .env to freeze it
 # (tests and the final demo become reproducible).
-TODAY = os.getenv("TODAY_OVERRIDE") or date.today().isoformat()
+TODAY = os.getenv("TODAY_OVERRIDE") or datetime.now(ZoneInfo("Asia/Karachi")).date().isoformat()
 REPLAY_MODE = _env_bool("REPLAY_MODE")
+ENABLE_LLM = _env_bool("ENABLE_LLM")
 
 MAX_VERIFIER_ROUNDS = 1   # Verifier -> Scout loop
 MAX_COACH_ROUNDS = 1      # Coach -> Matcher loop

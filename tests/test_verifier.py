@@ -13,6 +13,7 @@ State contract (from state.py / graph.py — M1):
 
 import pytest
 from datetime import date, timedelta
+from domain import today as current_day
 from agents.verifier import run as verifier
 
 
@@ -33,7 +34,7 @@ def _base_opp(overrides=None):
     A perfectly clean, valid opportunity dict (Scout format).
     Override any field to test a specific failure case.
     """
-    today = date.today()
+    today = current_day()
     opp = {
         "id":              "opp_test_base",
         "title":           "Test Software Internship",
@@ -54,6 +55,8 @@ def _base_opp(overrides=None):
     }
     if overrides:
         opp.update(overrides)
+    if not overrides or "source_url" not in overrides:
+        opp["source_url"] = "https://legitcorp.com/careers/" + opp["id"]
     return opp
 
 
@@ -117,7 +120,7 @@ class TestRejectionRules:
 
     def test_deadline_today_not_expired(self):
         """A deadline of today is NOT past — must not be rejected for expiry."""
-        today_str = date.today().strftime("%Y-%m-%d")
+        today_str = current_day().strftime("%Y-%m-%d")
         opp = _base_opp({"id": "opp_today_dl", "deadline": today_str})
         result = verifier(make_state([opp]))
         expired_rejection = any(
@@ -147,11 +150,11 @@ class TestRejectionRules:
         result = verifier(make_state([opp], offline=False))
         assert "opp_bitly" in rejected_ids(result)
 
-    def test_unofficial_url_allowed_when_offline(self):
-        """URL check must be skipped entirely when offline=True."""
+    def test_unofficial_url_rejected_when_offline(self):
+        """Structural host checks require no network and stay active offline."""
         opp = _base_opp({"id": "opp_bitly_offline", "source_url": "https://bit.ly/abc123"})
         result = verifier(make_state([opp], offline=True))
-        assert "opp_bitly_offline" not in rejected_ids(result)
+        assert "opp_bitly_offline" in rejected_ids(result)
 
     @pytest.mark.parametrize("url_pattern,opp_id", [
         ("https://bit.ly/abc",                "opp_url_bitly"),
@@ -288,7 +291,7 @@ class TestRecheckRound:
                  (LLM unavailable -> falls back to 'recheck').
         Round 1: same listing confirmed by Scout must NOT go to recheck again.
         """
-        old_date = (date.today() - timedelta(days=45)).strftime("%Y-%m-%d")
+        old_date = (current_day() - timedelta(days=45)).strftime("%Y-%m-%d")
         opp = _base_opp({"id": "opp_recheck_once", "last_checked": old_date})
 
         # Round 0 — Verifier sends it to Scout
@@ -306,7 +309,7 @@ class TestRecheckRound:
     def test_round1_verifies_all_valid_candidates_and_does_not_recheck(self):
         """In round 1, all candidates are processed, doubtful check is skipped, and recheck is empty."""
         opp_a = _base_opp({"id": "opp_a"})
-        old_date = (date.today() - timedelta(days=45)).strftime("%Y-%m-%d")
+        old_date = (current_day() - timedelta(days=45)).strftime("%Y-%m-%d")
         opp_b = _base_opp({"id": "opp_b", "last_checked": old_date})
 
         result = verifier(make_state([opp_a, opp_b], round_v=1))
@@ -315,10 +318,13 @@ class TestRecheckRound:
         assert "opp_a" in verified_ids(result)
         assert "opp_b" in verified_ids(result)
         assert result["recheck"] == []
+        stale = next(o for o in result["verified"] if o["id"] == "opp_b")
+        assert stale["verification_status"] == "needs_review"
+        assert stale["verification_warnings"]
 
     def test_near_deadline_listing_goes_to_recheck(self):
         """A listing whose deadline is 2 days away triggers doubtful -> recheck in round 0."""
-        near_deadline = (date.today() + timedelta(days=2)).strftime("%Y-%m-%d")
+        near_deadline = (current_day() + timedelta(days=2)).strftime("%Y-%m-%d")
         opp = _base_opp({"id": "opp_near_dl", "deadline": near_deadline})
         result = verifier(make_state([opp], round_v=0))
         assert "opp_near_dl" not in rejected_ids(result), (

@@ -73,7 +73,8 @@ def test_emits_one_challenge_for_close_deadlines_over_weekly_capacity(monkeypatc
     assert result["challenge"]["ids"] == ["a", "b"]
     assert "15 effort hours combined" in result["challenge"]["reason"]
     assert any(message["type"] == "challenge" for message in result["messages"])
-    assert len(result["plan"]["ranked"]) == 2
+    assert len(result["plan"]["ranked"]) == 1
+    assert result["plan"]["deferred"][0]["opportunity_id"] == "b"
 
 
 def test_does_not_challenge_after_the_single_allowed_round(monkeypatch):
@@ -92,7 +93,7 @@ def test_does_not_challenge_after_the_single_allowed_round(monkeypatch):
     result = coach.run(state)
 
     assert result["challenge"] is None
-    assert len(result["plan"]["ranked"]) == 2
+    assert len(result["plan"]["ranked"]) == 1
 
 
 def test_does_not_assume_weekly_hours_when_the_profile_omits_them(monkeypatch):
@@ -146,7 +147,7 @@ def test_no_eligible_matches_still_returns_useful_plan(monkeypatch):
     assert result["challenge"] is None
 
 
-def test_uses_valid_llm_checklist_and_tips(monkeypatch):
+def test_optional_llm_tips_cannot_replace_the_capacity_schedule(monkeypatch):
     monkeypatch.setattr(config, "TODAY", "2026-11-06")
     monkeypatch.setattr(
         coach.llm, "ask",
@@ -159,14 +160,14 @@ def test_uses_valid_llm_checklist_and_tips(monkeypatch):
         "verified": [opportunity("a", "2026-11-20", 5)],
         "matches": [match("a")],
         "profile": {},
+        "weekly_hours": 10,
+        "use_llm": True,
     }
 
     result = coach.run(state)
 
-    assert result["plan"]["weekly_checklist"] == [
-        {"week": 1, "tasks": ["Tailor your resume."]}
-    ]
-    assert result["plan"]["improvement_tips"] == ["Show a relevant project."]
+    assert result["plan"]["weekly_checklist"][0]["hours"] <= 10
+    assert "Show a relevant project." in result["plan"]["improvement_tips"]
     assert any("test-provider" in message["text"] for message in result["messages"])
 
 
@@ -177,13 +178,15 @@ def test_invalid_llm_output_uses_safe_code_fallback(monkeypatch):
         "verified": [opportunity("a", "2026-11-20", 5)],
         "matches": [match("a")],
         "profile": {},
+        "weekly_hours": 10,
+        "use_llm": True,
     }
 
     result = coach.run(state)
 
     assert result["plan"]["weekly_checklist"]
     assert result["plan"]["improvement_tips"]
-    assert any("code fallback" in message["text"] for message in result["messages"])
+    assert any("local planning rules" in message["text"] for message in result["messages"])
 
 
 def test_missing_state_does_not_crash_and_logs_error(monkeypatch):

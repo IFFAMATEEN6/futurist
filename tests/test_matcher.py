@@ -72,7 +72,7 @@ def test_every_failed_rule_has_a_reason():
 def test_missing_gpa_and_year_are_unknown_not_failed():
     p = dict(STUDENT_A, gpa=None, year=None)
     ok, reasons = check_eligibility(p, opp("a", min_year=3, min_gpa=3.0))
-    assert ok is True
+    assert ok is False  # Unknown evidence is conditional, never confirmed eligibility.
     assert sum("unknown" in r for r in reasons) == 2
 
 

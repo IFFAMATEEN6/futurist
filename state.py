@@ -2,6 +2,9 @@
 import operator
 from datetime import datetime
 from typing import Annotated, Optional, TypedDict
+from uuid import uuid4
+
+import config
 
 OPPORTUNITY_TYPES = ("internship", "scholarship", "hackathon", "competition", "workshop")
 MSG_TYPES = ("info", "result", "challenge", "response", "reject", "error")
@@ -9,7 +12,7 @@ MSG_TYPES = ("info", "result", "challenge", "response", "reject", "error")
 # Single source of truth: the state keys each agent may write ("messages" is always allowed).
 # Adding a new agent later = add one line here and one module in agents/.
 OWNED_KEYS = {
-    "scout": frozenset({"candidates"}),
+    "scout": frozenset({"candidates", "recheck_evidence"}),
     "profiler": frozenset({"profile"}),
     "verifier": frozenset({"verified", "rejected", "recheck"}),
     "matcher": frozenset({"matches"}),
@@ -44,20 +47,23 @@ class Opportunity(TypedDict):
 
 class Profile(TypedDict):
     name: str
-    year: int
-    field: str
-    gpa: float
-    nationality: str
+    year: Optional[int]
+    field: Optional[str]
+    gpa: Optional[float]
+    nationality: Optional[str]
     skills: list
     interests: list
     projects: list
     strength_score: int      # 0-100
     strength_notes: list
+    missing_fields: list
+    weekly_hours: Optional[float]
 
 
 class Match(TypedDict):
     opportunity_id: str
     eligible: bool
+    eligibility_status: str  # eligible, conditional or ineligible
     eligibility_reasons: list
     score: int               # 0-100
     score_reasons: list
@@ -68,11 +74,23 @@ class Plan(TypedDict):
     ranked: list             # [{"opportunity_id","rank","deadline","why","effort_hours"}]
     weekly_checklist: list   # [{"week": 1, "tasks": ["..."]}]
     improvement_tips: list
+    deferred: list
+    weekly_hours: Optional[float]
+    planning_date: str
+    total_hours: float
 
 
 class OpportunityState(TypedDict):
+    run_id: str
+    run_date: str
     student_input: str                       # UI
     interests_override: list                 # UI (optional form field)
+    opportunity_types: list
+    weekly_hours: float
+    use_llm: bool
+    offline: bool
+    recheck_evidence: dict
+    failures: Annotated[list, operator.add]
     profile: dict                            # Profiler
     candidates: list                         # Scout
     verified: list                           # Verifier
@@ -97,11 +115,20 @@ def error_msg(sender: str, text: str) -> Msg:
     return make_msg(sender, "all", "error", text)
 
 
-def new_state(student_input: str, interests_override: Optional[list] = None) -> OpportunityState:
+def new_state(student_input: str, interests_override: Optional[list] = None, *,
+              weekly_hours=10, opportunity_types=None, use_llm=False) -> OpportunityState:
     """Initial state for one run. Every key exists, so agents can read state[...] safely."""
     return {
+        "run_id": uuid4().hex,
+        "run_date": config.TODAY,
         "student_input": student_input,
         "interests_override": list(interests_override or []),
+        "opportunity_types": list(opportunity_types or []),
+        "weekly_hours": weekly_hours,
+        "use_llm": bool(use_llm),
+        "offline": not bool(use_llm),
+        "recheck_evidence": {},
+        "failures": [],
         "profile": {},
         "candidates": [],
         "verified": [],

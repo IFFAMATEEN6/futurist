@@ -1,1 +1,32 @@
-{}
+{
+  "name": "Rayan Ahmed",
+  "year": 4,
+  "field": "Computer Science",
+  "gpa": 3.9,
+  "nationality": "Pakistani",
+  "skills": [
+    "Python",
+    "SQL",
+    "Machine Learning",
+    "Deep Learning",
+    "Git",
+    "Data Analysis"
+  ],
+  "interests": [
+    "AI internships",
+    "research",
+    "scholarships"
+  ],
+  "projects": [
+    "Trained an image classifier",
+    "Built a student analytics dashboard",
+    "Developed a research paper search tool"
+  ],
+  "strength_score": 97,
+  "strength_notes": [
+    "6 named skills and 3 project examples support this profile.",
+    "Your GPA is a strength for merit-based applications."
+  ],
+  "missing_fields": [],
+  "weekly_hours": null
+}

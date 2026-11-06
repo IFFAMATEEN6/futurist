@@ -1,1 +1,8 @@
-4th year, GPA 3.9, 6+ skills, 3 projects, hackathon wins.
+Name: Rayan Ahmed
+Year: 4
+Field: Computer Science
+GPA: 3.9
+Nationality: Pakistani
+Skills: Python, SQL, Machine Learning, Deep Learning, Git, Data Analysis
+Projects: Trained an image classifier; Built a student analytics dashboard; Developed a research paper search tool
+Interests: AI internships, research, scholarships

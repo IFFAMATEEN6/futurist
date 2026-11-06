@@ -1,1 +1,26 @@
-{}
+{
+  "name": "Ayesha",
+  "year": 3,
+  "field": "Computer Science",
+  "gpa": 3.3,
+  "nationality": "Pakistani",
+  "skills": [
+    "Python",
+    "Machine Learning",
+    "HTML"
+  ],
+  "interests": [
+    "AI internships",
+    "scholarships"
+  ],
+  "projects": [
+    "built one class project (a quiz app)"
+  ],
+  "strength_score": 53,
+  "strength_notes": [
+    "3 named skills and 1 project examples support this profile.",
+    "Name the tools and skills you can demonstrate in an application."
+  ],
+  "missing_fields": [],
+  "weekly_hours": null
+}

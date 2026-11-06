@@ -1,1 +1,7 @@
-1st year, no GPA, one skill, no projects, vague interests.
+Name: Sara Khan
+Year: 1
+Field: Computer Science
+Nationality: Pakistani
+Skills: HTML
+Projects: None
+Interests: Web development, internships, workshops

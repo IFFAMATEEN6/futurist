@@ -113,15 +113,20 @@ def test_on_event_is_called_for_every_agent():
 def test_stream_events_ends_with_final_state():
     events = list(stream_events("x", agents=make_fakes([], False, False)))
     assert events[-1][0] == "final" and events[-1][2]["plan"] == {"ranked": []}
-    assert all(e[0] == "update" for e in events[:-1])
+    assert all(e[0] in ("update", "activity") for e in events[:-1])
+    for agent in AGENT_NAMES:
+        phases = [e[2]["phase"] for e in events if e[0] == "activity" and e[1] == agent]
+        assert phases == ["started", "completed"]
 
 
 # ---------- finding / replacing agents ----------
-def test_agent_without_run_becomes_stub(monkeypatch):
+def test_agent_without_run_reports_failure_without_fake_data(monkeypatch):
     monkeypatch.setitem(sys.modules, "agents.profiler", types.ModuleType("agents.profiler"))
     fn, status = graph.load_agent("profiler")
-    assert status == "stub"
-    assert fn({})["profile"]["name"] == "Student A"     # fake data from agents/stubs.py
+    assert status == "unavailable"
+    out = graph.guarded("profiler", fn)({})
+    assert out["profile"] == {}
+    assert out["failures"] == ["profiler"]
 
 
 def test_broken_agent_file_becomes_stub_not_a_crash(monkeypatch):

@@ -17,7 +17,8 @@
     "source_url": "https://kiroween.devpost.com/rules",
     "last_checked": "2026-11-06",
     "description": "Online hackathon to build an app with the Kiro AI coding IDE. Submission period ends Dec 4, 2026 at 2:00 pm Pacific. Check the rules page for age and country eligibility.",
-    "planted": false
+    "planted": false,
+    "eligibility_complete": false
   },
   {
     "id": "opp_102",
@@ -37,7 +38,8 @@
     "source_url": "https://genhacks-open.devpost.com/",
     "last_checked": "2026-11-06",
     "description": "Free virtual hackathon for students aged 13+, building software or hardware between Nov 1 and Dec 26, 2026. Submissions close Dec 26 at 12:00 am Eastern, so the last full day is Dec 25.",
-    "planted": false
+    "planted": false,
+    "eligibility_complete": false
   },
   {
     "id": "opp_103",
@@ -57,7 +59,8 @@
     "source_url": "https://cosmohacks.devpost.com/",
     "last_checked": "2026-11-06",
     "description": "Free month-long online student hackathon (Dec 19, 2026 to Jan 18, 2027), themed around tech for student or community life. Submit on Devpost by 4:00 pm CST on Jan 18.",
-    "planted": false
+    "planted": false,
+    "eligibility_complete": false
   },
   {
     "id": "opp_104",
@@ -77,7 +80,8 @@
     "source_url": "https://www.manchester.ac.uk/study/international/country-specific-information/pakistan/scholarships/",
     "last_checked": "2026-11-06",
     "description": "Merit scholarship for international master's applicants. You must hold an offer for a full-time on-campus master's at Manchester and submit the scholarship form by Apr 25, 2027.",
-    "planted": false
+    "planted": false,
+    "eligibility_complete": false
   },
   {
     "id": "opp_105",
@@ -97,7 +101,8 @@
     "source_url": "https://firebasehybridaihackathon.devpost.com/",
     "last_checked": "2026-11-06",
     "description": "Online hackathon to build AI apps that run on-device and in the cloud with Firebase AI Logic. $30,000 cash prize. Submissions open Nov 9 and close Nov 30, 2026 at 2:00 pm Pacific. Open to adults in all countries except standard exclusions.",
-    "planted": false
+    "planted": false,
+    "eligibility_complete": false
   },
   {
     "id": "opp_106",
@@ -119,7 +124,8 @@
     "source_url": "https://qnx.devpost.com/",
     "last_checked": "2026-11-06",
     "description": "Online hackathon to build projects that run on or support the QNX 8.0 real-time operating system (robotics, automotive, drivers, tooling). $50,000 in prizes. Deadline Dec 15, 2026 at 2:00 pm Eastern. Adults only; some countries are excluded, so check the rules page.",
-    "planted": false
+    "planted": false,
+    "eligibility_complete": false
   },
   {
     "id": "opp_107",
@@ -139,7 +145,8 @@
     "source_url": "https://build-your-first-ai-app.devpost.com/",
     "last_checked": "2026-11-06",
     "description": "Free beginner-friendly online AI hackathon for students: chatbots, document Q&A, study assistants. Submit by Nov 27, 2026 at 5:00 pm Eastern. Students only, adults, all countries except standard exclusions.",
-    "planted": false
+    "planted": false,
+    "eligibility_complete": false
   },
   {
     "id": "opp_108",
@@ -159,7 +166,8 @@
     "source_url": "https://aws-agentic-msp.devpost.com/",
     "last_checked": "2026-11-06",
     "description": "Online hackathon: build the AI-first managed service provider. $64,000 in prizes. Submit by Dec 11, 2026 at 3:00 pm Eastern. Eligibility not checked: confirm on the rules page.",
-    "planted": false
+    "planted": false,
+    "eligibility_complete": false
   },
   {
     "id": "opp_109",
@@ -179,7 +187,8 @@
     "source_url": "https://codegeist2026.devpost.com/",
     "last_checked": "2026-11-06",
     "description": "Online hackathon to build apps on Atlassian Forge and extend Atlassian products. $120,000 in prizes. Submit by Dec 22, 2026 at 3:00 pm Eastern. Eligibility not checked: confirm on the rules page.",
-    "planted": false
+    "planted": false,
+    "eligibility_complete": false
   },
   {
     "id": "opp_110",
@@ -199,7 +208,8 @@
     "source_url": "https://arbiter-hacks-v1.devpost.com/",
     "last_checked": "2026-11-06",
     "description": "Open-innovation online hackathon for projects with potential impact and usability. $7,800 in prizes. Closes Dec 21, 2026 at 12:00 am Eastern, so the last full day is Dec 20. Eligibility not checked: confirm on the rules page.",
-    "planted": false
+    "planted": false,
+    "eligibility_complete": false
   },
   {
     "id": "opp_111",
@@ -219,7 +229,8 @@
     "source_url": "https://code-for-humanity.devpost.com/",
     "last_checked": "2026-11-06",
     "description": "Online hackathon to build technology that reaches the people who need it most. Non-monetary prizes. Submit by Jan 15, 2027 at 7:00 am Eastern. Eligibility not checked: confirm on the rules page.",
-    "planted": false
+    "planted": false,
+    "eligibility_complete": false
   },
   {
     "id": "opp_112",
@@ -239,7 +250,8 @@
     "source_url": "https://syntax-summit.devpost.com/",
     "last_checked": "2026-11-06",
     "description": "Online hackathon themed Invent. Compile. Inspire. Non-monetary prizes. Submit by Jan 14, 2027 at 7:00 am Eastern. Eligibility not checked: confirm on the rules page.",
-    "planted": false
+    "planted": false,
+    "eligibility_complete": false
   },
   {
     "id": "opp_061",
@@ -264,7 +276,8 @@
     "source_url": "https://inf.ethz.ch/studies/summer-research-fellowship/how-to-apply.html",
     "last_checked": "2026-11-06",
     "planted": false,
-    "notes": "Window 1 Nov - 16 Dec 2026, 13:00 CET, via SiROP. Two years of study completed by July 2027. Programme 2 Jul - 27 Aug 2027, CHF 4,000 + travel."
+    "notes": "Window 1 Nov - 16 Dec 2026, 13:00 CET, via SiROP. Two years of study completed by July 2027. Programme 2 Jul - 27 Aug 2027, CHF 4,000 + travel.",
+    "eligibility_complete": false
   },
   {
     "id": "opp_062",
@@ -291,7 +304,8 @@
     "source_url": "https://www.s.u-tokyo.ac.jp/en/utrip/apply-now",
     "last_checked": "2026-11-06",
     "planted": false,
-    "notes": "Apply 12 Nov - 25 Dec 2026, 17:00 JST. Bachelor's students with at least one full year done; priority to 3rd year of 4. TOEFL/IELTS unless 8 years English-medium."
+    "notes": "Apply 12 Nov - 25 Dec 2026, 17:00 JST. Bachelor's students with at least one full year done; priority to 3rd year of 4. TOEFL/IELTS unless 8 years English-medium.",
+    "eligibility_complete": false
   },
   {
     "id": "opp_063",
@@ -313,7 +327,8 @@
     "source_url": "https://www.gatescambridge.org/apply/timeline/",
     "last_checked": "2026-11-06",
     "planted": false,
-    "notes": "Postgraduate (Master's/PhD). Funding deadline depends on course: 8 Dec 2026 or 6 Jan 2027, 23:59 UK time. Earliest date used here."
+    "notes": "Postgraduate (Master's/PhD). Funding deadline depends on course: 8 Dec 2026 or 6 Jan 2027, 23:59 UK time. Earliest date used here.",
+    "eligibility_complete": false
   },
   {
     "id": "opp_064",
@@ -333,7 +348,8 @@
     "source_url": "https://cscuk.fcdo.gov.uk/shared",
     "last_checked": "2026-11-06",
     "planted": false,
-    "notes": "Opens 10 Nov 2026, closes 16:00 GMT 8 Dec 2026. Pakistan is an eligible country. Needs 2:1 first degree by Sep 2027 and admission to a participating UK university."
+    "notes": "Opens 10 Nov 2026, closes 16:00 GMT 8 Dec 2026. Pakistan is an eligible country. Needs 2:1 first degree by Sep 2027 and admission to a participating UK university.",
+    "eligibility_complete": false
   },
   {
     "id": "opp_065",
@@ -355,7 +371,8 @@
     "source_url": "https://ghw.mlh.com/events",
     "last_checked": "2026-11-06",
     "planted": false,
-    "notes": "Online event, 4-10 Dec 2026. Page does not state eligibility or cost; check https://ghw.mlh.com/ before registering."
+    "notes": "Online event, 4-10 Dec 2026. Page does not state eligibility or cost; check https://ghw.mlh.com/ before registering.",
+    "eligibility_complete": false
   },
   {
     "id": "opp_066",
@@ -377,7 +394,8 @@
     "source_url": "https://www.outreachy.org/outreachy-dec-2026-internship-cohort/",
     "last_checked": "2026-11-06",
     "planted": false,
-    "notes": "Final applications due 9 Nov 2026, 4pm UTC; only for applicants whose initial application (closed 31 Aug 2026) was approved. Deadline within 3 days: Verifier should mark doubtful."
+    "notes": "Final applications due 9 Nov 2026, 4pm UTC; only for applicants whose initial application (closed 31 Aug 2026) was approved. Deadline within 3 days: Verifier should mark doubtful.",
+    "eligibility_complete": false
   },
   {
     "id": "opp_067",
@@ -399,7 +417,8 @@
     "source_url": "https://chevening.org/application-timeline",
     "last_checked": "2026-11-06",
     "planted": false,
-    "notes": "Real but EXPIRED. Official page says applications closed October 2026 (exact date per country page); 6 Oct 2026 per secondary sources. Verifier should reject as expired."
+    "notes": "Real but EXPIRED. Official page says applications closed October 2026 (exact date per country page); 6 Oct 2026 per secondary sources. Verifier should reject as expired.",
+    "eligibility_complete": false
   },
   {
     "id": "opp_068",
@@ -422,7 +441,8 @@
     "source_url": "https://developers.google.com/open-source/gsoc/timeline",
     "last_checked": "2026-11-06",
     "planted": false,
-    "notes": "Real but EXPIRED. 2026 contributor applications ran 16-31 Mar 2026, 18:00 UTC. 2027 timeline not published yet."
+    "notes": "Real but EXPIRED. 2026 contributor applications ran 16-31 Mar 2026, 18:00 UTC. 2027 timeline not published yet.",
+    "eligibility_complete": false
   },
   {
     "id": "opp_m2_planted_expired",
@@ -487,7 +507,8 @@
     ],
     "source_url": "https://ctrl-v-hackathon-31831.devpost.com/rules",
     "title": "Ctrl+V Hackathon",
-    "type": "hackathon"
+    "type": "hackathon",
+    "eligibility_complete": false
   },
   {
     "application_fee": false,
@@ -510,7 +531,8 @@
     ],
     "source_url": "https://norcal-hacks-27.devpost.com/",
     "title": "NorCal Hacks 27",
-    "type": "hackathon"
+    "type": "hackathon",
+    "eligibility_complete": false
   },
   {
     "application_fee": false,
@@ -533,7 +555,8 @@
     ],
     "source_url": "https://checkpoint-1.devpost.com/",
     "title": "checkpoint 1 — games for good",
-    "type": "hackathon"
+    "type": "hackathon",
+    "eligibility_complete": false
   },
   {
     "application_fee": false,
@@ -556,7 +579,8 @@
     ],
     "source_url": "https://syntax-summit.devpost.com/",
     "title": "Syntax Summit",
-    "type": "hackathon"
+    "type": "hackathon",
+    "eligibility_complete": false
   },
   {
     "application_fee": false,
@@ -579,7 +603,8 @@
     ],
     "source_url": "https://nsh-rpi-2027.devpost.com/",
     "title": "NSH @RPI 2027",
-    "type": "hackathon"
+    "type": "hackathon",
+    "eligibility_complete": false
   },
   {
     "application_fee": false,
@@ -604,7 +629,8 @@
     ],
     "source_url": "https://aiesec.org/opportunity/global-talent/1292245",
     "title": "Talent Acquisition Analyst",
-    "type": "internship"
+    "type": "internship",
+    "eligibility_complete": false
   },
   {
     "application_fee": false,
@@ -630,7 +656,8 @@
     ],
     "source_url": "https://aiesec.org/opportunity/global-talent/1318468",
     "title": "Web designing",
-    "type": "internship"
+    "type": "internship",
+    "eligibility_complete": false
   },
   {
     "application_fee": false,
@@ -656,7 +683,8 @@
     ],
     "source_url": "https://careers.google.com/jobs/results/120211620121977542",
     "title": "Student Researcher, 2027",
-    "type": "internship"
+    "type": "internship",
+    "eligibility_complete": false
   },
   {
     "application_fee": false,
@@ -683,7 +711,8 @@
     ],
     "source_url": "https://careers.google.com/jobs/results/75665705386549958",
     "title": "Forward Deployed Engineering Intern, BS/MS, Summer 2027",
-    "type": "internship"
+    "type": "internship",
+    "eligibility_complete": false
   },
   {
     "application_fee": false,
@@ -706,7 +735,8 @@
     ],
     "source_url": "https://leap.microsoft.com/en-US/",
     "title": "Microsoft Leap Apprenticeship Program",
-    "type": "internship"
+    "type": "internship",
+    "eligibility_complete": false
   },
   {
     "application_fee": false,
@@ -725,7 +755,8 @@
     "required_skills": [],
     "source_url": "https://sciencespo.fr/students/en/fees-funding/bursaries-financial-aid/mastercard-foundation-scholarships/graduate-study/",
     "title": "Mastercard Foundation Scholars Program at Sciences Po 2027",
-    "type": "scholarship"
+    "type": "scholarship",
+    "eligibility_complete": false
   },
   {
     "application_fee": false,
@@ -744,7 +775,8 @@
     "required_skills": [],
     "source_url": "https://si.se/en/apply/scholarships/swedish-institute-scholarships-for-global-professionals/",
     "title": "SI Scholarship for Global Professionals 2027",
-    "type": "scholarship"
+    "type": "scholarship",
+    "eligibility_complete": false
   },
   {
     "application_fee": false,
@@ -763,7 +795,8 @@
     "required_skills": [],
     "source_url": "https://www.ox.ac.uk/admissions/graduate/fees-and-funding/fees-funding-and-scholarship-search/weidenfeld-hoffmann-scholarships-and-leadership-programme",
     "title": "Weidenfeld-Hoffmann Scholarships and Leadership Programme 2027-2028",
-    "type": "scholarship"
+    "type": "scholarship",
+    "eligibility_complete": false
   },
   {
     "application_fee": false,
@@ -782,7 +815,8 @@
     "required_skills": [],
     "source_url": "https://jobs.fao.org/careersection/fao_external/jobsearch.ftl?lang=en",
     "title": "FAO Paid Internship Programme for Africa 2027",
-    "type": "internship"
+    "type": "internship",
+    "eligibility_complete": false
   },
   {
     "application_fee": false,
@@ -803,7 +837,8 @@
     ],
     "source_url": "https://www.canneslions.com/impact/lions-scholarship",
     "title": "Cannes Lions Scholarship 2027",
-    "type": "scholarship"
+    "type": "scholarship",
+    "eligibility_complete": false
   },
   {
     "application_fee": false,
@@ -825,7 +860,8 @@
     ],
     "source_url": "https://yenchingacademy.pku.edu.cn/ADMISSIONS.htm",
     "title": "Yenching Academy Scholarship 2027",
-    "type": "scholarship"
+    "type": "scholarship",
+    "eligibility_complete": false
   },
   {
     "application_fee": false,
@@ -846,7 +882,8 @@
     ],
     "source_url": "https://ethz.ch/en/studies/master/application/dates.html",
     "title": "ETH Zurich Excellence Scholarship & Opportunity Programme (ESOP) 2027",
-    "type": "scholarship"
+    "type": "scholarship",
+    "eligibility_complete": false
   },
   {
     "application_fee": false,
@@ -868,7 +905,8 @@
     ],
     "source_url": "https://www.hks.harvard.edu/centers/cpl/fellowships/equity-fellowship#program-information",
     "title": "Harvard Kennedy School Equity Fellowship 2027-2028",
-    "type": "scholarship"
+    "type": "scholarship",
+    "eligibility_complete": false
   },
   {
     "application_fee": false,
@@ -890,7 +928,8 @@
     ],
     "source_url": "https://www.spaceappschallenge.org/2026/",
     "title": "NASA Space Apps Challenge 2026",
-    "type": "hackathon"
+    "type": "hackathon",
+    "eligibility_complete": false
   },
   {
     "id": "opp_m2_020",
@@ -913,6 +952,7 @@
     "application_fee": false,
     "source_url": "https://paypalaihackathon.devpost.com/",
     "last_checked": "2026-11-06",
-    "planted": false
+    "planted": false,
+    "eligibility_complete": false
   }
 ]

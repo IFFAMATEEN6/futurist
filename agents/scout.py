@@ -7,6 +7,7 @@ import re
 from functools import lru_cache
 
 import config
+from domain import canonical_url, safe_url
 from state import error_msg, make_msg
 
 # --- keyword tables: add a row to support a new type or topic -------------------------
@@ -47,7 +48,8 @@ def _has(norm_text: str, word: str) -> bool:
 
 def _record_text(rec: dict) -> str:
     parts = [rec.get("title", ""), rec.get("description", ""), rec.get("org", "")]
-    parts += rec.get("required_skills") or []
+    skills = rec.get("required_skills")
+    parts += skills if isinstance(skills, list) else []
     return " ".join(str(p) for p in parts)
 
 
@@ -92,7 +94,7 @@ def extract_interests(student_input: str, interests_override=None) -> dict:
 # --- ranking ----------------------------------------------------------------------------
 def _deadline_key(rec: dict):
     """Upcoming deadlines first ('rolling' leads them), then passed ones."""
-    deadline = rec.get("deadline", "")
+    deadline = str(rec.get("deadline", ""))
     if deadline == "rolling":
         return (0, "")
     return (1 if deadline < config.TODAY else 0, deadline)
@@ -126,6 +128,7 @@ def _recheck(state: dict, index: tuple) -> dict:
     by_id = {r.get("id"): r for r, _ in index}
     candidates = list(state.get("candidates", []))
     messages = []
+    evidence = dict(state.get("recheck_evidence") or {})
     for opp_id in state.get("recheck", []):
         rec = by_id.get(opp_id)
         if rec is None:
@@ -139,11 +142,13 @@ def _recheck(state: dict, index: tuple) -> dict:
                 break
         else:
             candidates.append(fresh)
+        evidence[opp_id] = {"source_checked_live": False, "mode": "catalog_reread",
+                            "note": "Scout re-read the local catalog; no independent source check was performed."}
         messages.append(make_msg(
             "scout", "verifier", "response",
-            f"Re-checked {opp_id} ({rec.get('title')}): deadline {rec.get('deadline')} "
-            f"confirmed in the dataset (last checked {rec.get('last_checked')})."))
-    return {"candidates": candidates, "messages": messages}
+            f"Re-read {opp_id} ({rec.get('title')}): catalog deadline {rec.get('deadline')}, "
+            f"last checked {rec.get('last_checked')}. No new source evidence; preserve review warnings."))
+    return {"candidates": candidates, "recheck_evidence": evidence, "messages": messages}
 
 
 # --- agent entry point ------------------------------------------------------------------
@@ -158,13 +163,30 @@ def run(state: dict) -> dict:
             return _recheck(state, index)
 
         interests = extract_interests(state.get("student_input", ""), state.get("interests_override"))
-        picked, note = _select(index, interests)
+        types = state.get("opportunity_types") or []
+        pool = tuple((r, text) for r, text in index if not types or r.get("type") in types)
+        # Deduplicate before the candidate cap so repeat records cannot crowd out useful matches.
+        unique, seen_ids, seen_sources = [], set(), set()
+        duplicates = 0
+        for record, text in pool:
+            source = canonical_url(record.get("source_url")) if safe_url(record.get("source_url")) else None
+            identity = record.get("id") if isinstance(record.get("id"), str) else None
+            if (identity and identity in seen_ids) or (source and source in seen_sources):
+                duplicates += 1
+                continue
+            if identity:
+                seen_ids.add(identity)
+            if source:
+                seen_sources.add(source)
+            unique.append((record, text))
+        picked, note = _select(tuple(unique), interests)
         picked = copy.deepcopy(picked)      # copies, so no agent can alter the cached dataset
 
         if not picked:
             return {"candidates": [], "messages": [make_msg(
                 "scout", "all", "info", "No opportunities match these interests. " + note)]}
         return {"candidates": picked, "messages": [make_msg(
-            "scout", "verifier", "result", f"Found {len(picked)} candidates. {note}")]}
+            "scout", "verifier", "result", f"Found {len(picked)} candidates from {len(unique)} unique catalog listings. "
+            f"{duplicates} duplicate(s) removed. {note} Check source quality and deadlines next.")]}
     except Exception as exc:
         return {"candidates": [], "messages": [error_msg("scout", f"Scout failed: {exc}")]}

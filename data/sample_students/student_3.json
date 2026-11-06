@@ -1,1 +1,27 @@
-{}
+{
+  "name": "Sara Khan",
+  "year": 1,
+  "field": "Computer Science",
+  "gpa": null,
+  "nationality": "Pakistani",
+  "skills": [
+    "HTML"
+  ],
+  "interests": [
+    "Web development",
+    "internships",
+    "workshops"
+  ],
+  "projects": [],
+  "strength_score": 9,
+  "strength_notes": [
+    "1 named skills and 0 project examples support this profile.",
+    "Add a project example with your contribution and outcome.",
+    "Name the tools and skills you can demonstrate in an application.",
+    "GPA is missing or outside the supported 0–4 scale."
+  ],
+  "missing_fields": [
+    "gpa"
+  ],
+  "weekly_hours": null
+}

@@ -10,7 +10,7 @@ from scripts.validate_data import validate_records
 def rec(i, type_, title, deadline="2026-12-20", skills=None):
     return {"id": f"opp_{i:03d}", "title": title, "org": "Org", "type": type_, "deadline": deadline,
             "eligibility": {}, "required_skills": skills or [], "effort_hours": 5,
-            "application_fee": False, "source_url": "https://x.org", "last_checked": "2026-11-05",
+            "application_fee": False, "source_url": f"https://x.org/{i}", "last_checked": "2026-11-05",
             "description": ""}
 
 

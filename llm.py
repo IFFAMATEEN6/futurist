@@ -1,4 +1,4 @@
-"""LLM wrapper: Groq only (Llama model). Plain-code fallback in each agent if it fails.
+"""Optional language assistance: Groq primary/fallback models, then configured Ollama.
 
 Every agent calls ask(). It never raises.
 Returns (result, note):
@@ -7,21 +7,18 @@ Returns (result, note):
 If result is None, the agent must use its plain-code fallback.
 """
 import json
-import os
 import re
 import time
 import urllib.error
 import urllib.request
 
-from dotenv import load_dotenv
+import config
 
-load_dotenv()
+GROQ_API_KEY = config.GROQ_API_KEY
+GROQ_MODEL = config.GROQ_MODEL
 
-GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
-GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
-
-TIMEOUT = 30          # seconds per request
-MAX_RETRIES = 2       # extra tries per provider (rate limit or bad JSON)
+TIMEOUT = max(1, config.LLM_TIMEOUT)
+MAX_RETRIES = max(0, config.LLM_RETRIES)
 
 
 class RateLimitError(Exception):
@@ -29,7 +26,9 @@ class RateLimitError(Exception):
 
 
 class ProviderError(Exception):
-    pass
+    def __init__(self, message, *, transient=False):
+        super().__init__(message)
+        self.transient = transient
 
 
 # ---------- providers ----------
@@ -47,19 +46,20 @@ def _post_json(url, body, headers=None):
     except urllib.error.HTTPError as e:
         if e.code == 429:
             raise RateLimitError(f"HTTP 429 from {url}")
-        raise ProviderError(f"HTTP {e.code} from {url}")
+        raise ProviderError(f"HTTP {e.code} from {url}", transient=e.code >= 500)
     except (urllib.error.URLError, TimeoutError, OSError) as e:
-        raise ProviderError(f"cannot reach {url}: {e}")
+        raise ProviderError(f"cannot reach {url}", transient=True)
 
 
-def _groq(prompt, system, want_json):
+def _groq(prompt, system, want_json, model=None):
     if not GROQ_API_KEY:
         raise ProviderError("GROQ_API_KEY missing")
     messages = []
     if system:
         messages.append({"role": "system", "content": system})
     messages.append({"role": "user", "content": prompt})
-    body = {"model": GROQ_MODEL, "messages": messages, "temperature": 0.2}
+    body = {"model": model or GROQ_MODEL, "messages": messages, "temperature": config.LLM_TEMPERATURE,
+            "max_tokens": max(1, config.LLM_MAX_TOKENS)}
     if want_json:
         body["response_format"] = {"type": "json_object"}
     out = _post_json(
@@ -74,7 +74,23 @@ def _groq(prompt, system, want_json):
 
 
 # Order matters. Tests can replace this list with fake providers.
-PROVIDERS = [("groq", _groq)]
+def _groq_fallback(prompt, system, want_json):
+    return _groq(prompt, system, want_json, config.GROQ_FALLBACK_MODEL)
+
+
+def _ollama(prompt, system, want_json):
+    if not config.OLLAMA_MODEL:
+        raise ProviderError("local model is not configured")
+    body = {"model": config.OLLAMA_MODEL, "prompt": prompt, "system": system, "stream": False,
+            "options": {"temperature": config.LLM_TEMPERATURE, "num_predict": config.LLM_MAX_TOKENS}}
+    if want_json:
+        body["format"] = "json"
+    return _post_json(config.OLLAMA_URL.rstrip("/") + "/api/generate", body).get("response", "")
+
+
+PROVIDERS = [("groq", _groq), ("groq fallback", _groq_fallback)]
+if config.OLLAMA_MODEL:
+    PROVIDERS.append(("ollama", _ollama))
 
 
 # ---------- helpers ----------
@@ -127,6 +143,12 @@ def ask(prompt, system="", want_json=False):
                 if attempt < MAX_RETRIES:
                     continue
                 errors.append(f"{name}: {e}")
+                break
+            except ProviderError as e:
+                if e.transient and attempt < MAX_RETRIES:
+                    time.sleep(min(2 ** attempt, 4))
+                    continue
+                errors.append(f"{name}: {str(e)[:120]}")
                 break
             except Exception as e:                   # missing key, offline, HTTP error
                 errors.append(f"{name}: {str(e)[:120]}")
