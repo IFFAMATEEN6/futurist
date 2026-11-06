@@ -1,1 +1,6 @@
 # Add project dependencies here.
+langgraph
+streamlit
+groq
+python-dotenv
+pytest
