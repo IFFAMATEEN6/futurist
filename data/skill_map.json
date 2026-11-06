@@ -1,1 +1,20 @@
-{}
+{
+  "Python": {"learn": "Functions, OOP, file handling, libraries", "resource": "https://docs.python.org/3/tutorial/", "hours": 20},
+  "SQL": {"learn": "SELECT, JOIN, GROUP BY, subqueries", "resource": "https://sqlbolt.com/", "hours": 10},
+  "Machine Learning": {"learn": "Regression, classification, model evaluation with scikit-learn", "resource": "https://scikit-learn.org/stable/tutorial/", "hours": 30},
+  "Deep Learning": {"learn": "Neural networks, CNNs, training loops in PyTorch", "resource": "https://pytorch.org/tutorials/", "hours": 40},
+  "Data Analysis": {"learn": "pandas, numpy, data cleaning", "resource": "https://pandas.pydata.org/docs/getting_started/", "hours": 15},
+  "Statistics": {"learn": "Probability, distributions, hypothesis testing", "resource": "https://www.khanacademy.org/math/statistics-probability", "hours": 20},
+  "HTML": {"learn": "Semantic tags, forms, accessibility", "resource": "https://developer.mozilla.org/en-US/docs/Learn/HTML", "hours": 5},
+  "CSS": {"learn": "Flexbox, grid, responsive design", "resource": "https://developer.mozilla.org/en-US/docs/Learn/CSS", "hours": 8},
+  "JavaScript": {"learn": "DOM, async/await, fetch API", "resource": "https://javascript.info/", "hours": 20},
+  "React": {"learn": "Components, hooks, state", "resource": "https://react.dev/learn", "hours": 20},
+  "Git": {"learn": "Branching, merging, pull requests", "resource": "https://learngitbranching.js.org/", "hours": 4},
+  "Java": {"learn": "OOP, collections, exceptions", "resource": "https://dev.java/learn/", "hours": 25},
+  "C++": {"learn": "Pointers, STL, OOP", "resource": "https://www.learncpp.com/", "hours": 25},
+  "Data Structures": {"learn": "Arrays, trees, graphs, hashing", "resource": "https://leetcode.com/explore/", "hours": 30},
+  "Cloud": {"learn": "Basics of AWS/GCP compute and storage", "resource": "https://cloud.google.com/learn/training", "hours": 15},
+  "Public Speaking": {"learn": "Pitching a project in 2-3 minutes", "resource": "https://www.toastmasters.org/resources", "hours": 5},
+  "Research Writing": {"learn": "Abstract, literature review, citations", "resource": "https://owl.purdue.edu/owl/research_and_citation/", "hours": 10},
+  "UI/UX Design": {"learn": "Wireframes, prototyping in Figma", "resource": "https://help.figma.com/hc/en-us/categories/360002051613", "hours": 12}
+}
