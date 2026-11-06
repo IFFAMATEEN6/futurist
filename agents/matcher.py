@@ -12,8 +12,10 @@ import json
 import re
 from pathlib import Path
 
+from state import error_msg, make_msg
+
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
-SENDER = "Matcher"
+SENDER = "matcher"  # lowercase, same as state.OWNED_KEYS
 
 # score weights (sum = 1.0)
 W_SKILL = 0.5
@@ -47,7 +49,7 @@ INTEREST_KEYWORDS = {
 # ---------- helpers ----------
 
 def _msg(recipient, mtype, text):
-    return {"sender": SENDER, "recipient": recipient, "type": mtype, "text": text}
+    return make_msg(SENDER, recipient, mtype, text)
 
 
 def _load_json(name, default):
@@ -96,6 +98,11 @@ def check_eligibility(profile, opp):
         elif year < min_year:
             eligible = False
             reasons.append(f"Needs year {int(min_year)}+, student is year {int(year)}")
+
+    max_year = _num(rules.get("max_year"))
+    if max_year is not None and year is not None and year > max_year:
+        eligible = False
+        reasons.append(f"Open up to year {int(max_year)}, student is year {int(year)}")
 
     # GPA
     min_gpa = _num(rules.get("min_gpa"))
@@ -259,9 +266,9 @@ def matcher(state):
         skill_map = _load_json("skill_map.json", {})
 
         if not profile:
-            messages.append(_msg("Coach", "info", "No profile available; matching with unknown values"))
+            messages.append(_msg("coach", "info", "No profile available; matching with unknown values"))
         if not opps:
-            messages.append(_msg("Coach", "result", "No verified opportunities to match"))
+            messages.append(_msg("coach", "result", "No verified opportunities to match"))
             return {"matches": [], "messages": messages}
 
         matches = []
@@ -279,27 +286,28 @@ def matcher(state):
                 "gaps": build_gaps(missing, opp, skill_map),
             })
             if any("unknown" in r for r in e_reasons):
-                messages.append(_msg("Coach", "info", f"{opp['id']}: " + "; ".join(
+                messages.append(_msg("coach", "info", f"{opp['id']}: " + "; ".join(
                     r for r in e_reasons if "unknown" in r)))
 
         challenge = state.get("challenge")
         if challenge:
             matches, reply = apply_challenge(matches, challenge)
             if reply:
-                messages.append(_msg("Coach", "response", reply))
+                messages.append(_msg("coach", "response", reply))
 
         matches = _sort(matches)
         n_ok = sum(m["eligible"] for m in matches)
         top = ", ".join(f"{m['opportunity_id']} ({m['score']})" for m in matches if m["eligible"])[:200]
-        messages.append(_msg("Coach", "result",
+        messages.append(_msg("coach", "result",
                              f"{n_ok} of {len(matches)} verified opportunities are eligible"
                              + (f". Top: {top}" if n_ok else "")))
         return {"matches": matches, "messages": messages}
 
     except Exception as e:  # never raise
-        messages.append(_msg("Coach", "error", f"Matcher failed: {str(e)[:150]}. Returning no matches"))
+        messages.append(error_msg(SENDER, f"Matcher failed: {str(e)[:150]}. Returning no matches"))
         return {"matches": [], "messages": messages}
 
 
 # alias so graph.py can use either name
 agent = matcher
+run = matcher  # entry point used by graph.py

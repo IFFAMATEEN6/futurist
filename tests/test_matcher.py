@@ -1,11 +1,10 @@
-"""Tests for the Matcher agent."""
 import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import llm  # noqa: E402
-from agents.matcher import check_eligibility, has_skill, matcher  # noqa: E402
+from agents.matcher import check_eligibility, has_skill, matcher, run  # noqa: E402
 
 STUDENT_A = {
     "name": "Student A", "year": 3, "field": "Computer Science", "gpa": 3.3,
@@ -16,7 +15,7 @@ STUDENT_A = {
 
 
 def opp(id_, **elig):
-    base = {"min_year": None, "min_gpa": None, "fields": [], "nationalities": []}
+    base = {"min_year": None, "max_year": None, "min_gpa": None, "fields": [], "nationalities": []}
     base.update(elig)
     return {
         "id": id_, "title": "AI Research Intern", "org": "Org", "type": "internship",
@@ -33,6 +32,18 @@ def test_year_pass_and_fail():
     assert check_eligibility(STUDENT_A, opp("a", min_year=3))[0] is True
     ok, reasons = check_eligibility(STUDENT_A, opp("a", min_year=4))
     assert ok is False and any("year" in r.lower() for r in reasons)
+
+
+def test_max_year_fail():
+    ok, reasons = check_eligibility(STUDENT_A, opp("a", max_year=2))
+    assert ok is False and any("up to year" in r for r in reasons)
+
+
+def test_run_entry_point_and_message_format():
+    out = run({"profile": STUDENT_A, "verified": [opp("a")]})
+    assert set(out) == {"matches", "messages"}
+    m = out["messages"][-1]
+    assert m["sender"] == "matcher" and m["recipient"] == "coach" and "ts" in m
 
 
 def test_gpa_pass_and_fail():
@@ -113,7 +124,7 @@ def test_empty_and_bad_state_do_not_crash():
     assert matcher({"profile": None, "verified": None})["matches"] == []
     out = matcher({"profile": STUDENT_A, "verified": [{"id": "z", "eligibility": "broken"}]})
     assert isinstance(out["matches"], list)
-    assert all(set(m) >= {"sender", "recipient", "type", "text"} for m in out["messages"])
+    assert all(set(m) >= {"sender", "recipient", "type", "text", "ts"} for m in out["messages"])
 
 
 # ---------- LLM fallback ----------
