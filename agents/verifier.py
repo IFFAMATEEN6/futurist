@@ -12,9 +12,7 @@ except ImportError:
 # ask() returns (result, note) — NEVER raises.
 try:
     from llm import ask
-    LLM_AVAILABLE = True
 except ImportError:
-    LLM_AVAILABLE = False
     def ask(prompt, system="", want_json=False):
         return None, "llm.py not available"
 # ─────────────────────────────────────────────────────────────────────────────

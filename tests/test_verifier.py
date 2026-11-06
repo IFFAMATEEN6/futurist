@@ -112,6 +112,24 @@ class TestRejectionRules:
         result = verifier(make_state(["opp_rolling"], [opp]))
         assert "opp_rolling" not in get_rejected_ids(result)
 
+    def test_deadline_today_not_expired(self):
+        """A deadline of today is NOT past — must not be rejected for expiry."""
+        today_str = date.today().strftime("%Y-%m-%d")
+        opp = _base_opp({"id": "opp_today_dl", "deadline": today_str})
+        result = verifier(make_state(["opp_today_dl"], [opp]))
+        # May end up in recheck (near-deadline = 0 days) but not expired-rejected
+        expired_rejection = any(
+            r["id"] == "opp_today_dl" and "passed" in r["reason"].lower()
+            for r in result["rejected"]
+        )
+        assert not expired_rejection, "Deadline of today should NOT be treated as expired"
+
+    def test_unparseable_deadline_treated_as_expired(self):
+        """A deadline string that cannot be parsed is treated as expired and rejected."""
+        opp = _base_opp({"id": "opp_bad_date", "deadline": "not-a-date"})
+        result = verifier(make_state(["opp_bad_date"], [opp]))
+        assert "opp_bad_date" in get_rejected_ids(result)
+
     def test_application_fee_rejected(self):
         opp = _base_opp({"id": "opp_fee", "application_fee": True})
         result = verifier(make_state(["opp_fee"], [opp]))
@@ -139,6 +157,22 @@ class TestRejectionRules:
         result = verifier(make_state(["opp_bitly_offline"], [opp], offline=True))
         assert "opp_bitly_offline" not in get_rejected_ids(result)
 
+    @pytest.mark.parametrize("url_pattern,opp_id", [
+        ("https://bit.ly/abc",                       "opp_url_bitly"),
+        ("https://tinyurl.com/abc",                  "opp_url_tinyurl"),
+        ("https://t.co/abc",                         "opp_url_tco"),
+        ("https://forms.gle/abc",                    "opp_url_formsgle"),
+        ("https://docs.google.com/forms/abc",        "opp_url_googleforms"),
+        ("https://linktr.ee/someorg",                "opp_url_linktree"),
+    ])
+    def test_all_unofficial_url_patterns_rejected(self, url_pattern, opp_id):
+        """Every known unofficial URL pattern must trigger rejection when online."""
+        opp = _base_opp({"id": opp_id, "source_url": url_pattern})
+        result = verifier(make_state([opp_id], [opp], offline=False))
+        assert opp_id in get_rejected_ids(result), (
+            f"URL pattern '{url_pattern}' should trigger rejection but did not"
+        )
+
     def test_missing_required_field_rejected(self):
         opp = _base_opp({"id": "opp_no_title"})
         del opp["title"]
@@ -160,6 +194,24 @@ class TestRejectionRules:
         })
         result = verifier(make_state(["opp_scam_org"], [opp]))
         assert "opp_scam_org" in get_rejected_ids(result)
+
+    def test_guaranteed_admission_scam_phrase_rejected(self):
+        """'guaranteed admission' scam phrase must be detected."""
+        opp = _base_opp({
+            "id":    "opp_scam_admission",
+            "title": "Guaranteed Admission MBA Program"
+        })
+        result = verifier(make_state(["opp_scam_admission"], [opp]))
+        assert "opp_scam_admission" in get_rejected_ids(result)
+
+    def test_guaranteed_job_scam_phrase_rejected(self):
+        """'guaranteed job' scam phrase must be detected."""
+        opp = _base_opp({
+            "id":    "opp_scam_job",
+            "title": "Guaranteed Job Placement Bootcamp"
+        })
+        result = verifier(make_state(["opp_scam_job"], [opp]))
+        assert "opp_scam_job" in get_rejected_ids(result)
 
 
 # ── Clean listing passes ──────────────────────────────────────────────────────
@@ -186,7 +238,8 @@ class TestRecheckRound:
 
     def test_recheck_fires_max_once(self):
         """
-        Round 0: doubtful listing goes to recheck.
+        Round 0: a stale listing (last_checked > 30 days) should be sent to
+        Scout for re-check (LLM unavailable → fallback is 'recheck').
         Round 1: same listing confirmed by Scout must NOT go to recheck again.
         """
         old_date = (date.today() - timedelta(days=45)).strftime("%Y-%m-%d")
@@ -202,10 +255,10 @@ class TestRecheckRound:
             round_v=0
         )
         result_r0 = verifier(state_r0)
-        # Must be in recheck OR handled by LLM — not hard rejected
-        assert "opp_recheck_once" not in get_rejected_ids(result_r0) or \
-               "opp_recheck_once" in result_r0["recheck"] or \
-               "opp_recheck_once" in result_r0["verified"]
+        # LLM unavailable → falls back to 'recheck'; listing must be in recheck
+        assert "opp_recheck_once" in result_r0["recheck"], (
+            "Stale listing (last_checked > 30 days) should be sent to recheck in round 0"
+        )
 
         # Round 1 — Scout re-confirmed, Verifier must NOT recheck again
         state_r1 = make_state(
@@ -215,8 +268,7 @@ class TestRecheckRound:
             recheck_responses=["opp_recheck_once"]
         )
         result_r1 = verifier(state_r1)
-        assert "opp_recheck_once" not in result_r1["recheck"], \
-            "Verifier sent the same ID to recheck a second time — must only fire once"
+        assert "opp_recheck_once" not in result_r1["recheck"],             "Verifier sent the same ID to recheck a second time — must only fire once"
 
     def test_round1_processes_recheck_responses_not_candidates(self):
         """In round 1, candidates list is ignored — only recheck_responses matter."""
@@ -234,6 +286,23 @@ class TestRecheckRound:
         assert "opp_b" in result["verified"]
         assert "opp_a" not in result["verified"]
         assert "opp_a" not in get_rejected_ids(result)
+
+    def test_near_deadline_listing_goes_to_recheck(self):
+        """A listing whose deadline is 2 days away triggers doubtful → recheck in round 0."""
+        near_deadline = (date.today() + timedelta(days=2)).strftime("%Y-%m-%d")
+        opp = _base_opp({
+            "id":       "opp_near_dl",
+            "deadline": near_deadline,
+        })
+        state = make_state(candidates=["opp_near_dl"], opportunities=[opp], round_v=0)
+        result = verifier(state)
+        # LLM unavailable → falls back to 'recheck'; must NOT be hard-rejected
+        assert "opp_near_dl" not in get_rejected_ids(result), (
+            "Near-deadline listing should not be hard-rejected"
+        )
+        assert "opp_near_dl" in result["recheck"], (
+            "Near-deadline listing (deadline in 2 days) should be flagged as doubtful → recheck"
+        )
 
 
 # ── Edge cases ────────────────────────────────────────────────────────────────
@@ -259,8 +328,7 @@ class TestEdgeCases:
         result = verifier(make_state(["opp_test_base"], [opp]))
         owned = {"verified", "rejected", "recheck", "messages"}
         for key in result:
-            assert key in owned, \
-                f"Verifier returned unexpected state key: '{key}'"
+            assert key in owned,                 f"Verifier returned unexpected state key: '{key}'"
 
     def test_no_verified_listing_has_expired_deadline(self):
         expired = _base_opp({"id": "opp_exp2",   "deadline": "2020-06-01"})
