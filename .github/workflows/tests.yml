@@ -1,0 +1,37 @@
+name: Test Futurist
+
+on:
+  push:
+    branches: [main, ali-haider]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    env:
+      ENABLE_LLM: "false"
+      REPLAY_MODE: "false"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.lock
+      - name: Install locked environment
+        run: python -m pip install -r requirements.lock
+      - name: Run all tests
+        run: python -m pytest -q -ra
+      - name: Validate catalog structure
+        run: python -m scripts.validate_data
+      - name: Check dependencies
+        run: python -m pip check

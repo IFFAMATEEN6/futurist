@@ -1,165 +1,170 @@
-# Opportunity Intelligence Network
+# Futurist
 
-Opportunity Intelligence Network is a planned Streamlit app that helps students find and prepare for internships, scholarships, hackathons, competitions, and workshops. A student provides a profile; five collaborating agents find relevant opportunities, verify listings, assess eligibility and skill gaps, and create a ranked application plan.
+**A clearer path from your student profile to your next opportunity.**
 
-> **Project status:** The graph and five agent modules are implemented, and the opportunity dataset currently contains 42 records. The Streamlit entry point (`app.py`) and replay module (`replay.py`) are still placeholders, and the sample student files are empty, so the complete user-facing application is not ready yet.
+Futurist is the Opportunity Intelligence Network: a Streamlit workspace where five agents find relevant student opportunities, check catalog evidence, explain eligibility and skill gaps, and build a preparation plan around your weekly availability.
 
-## How the workflow is designed
+The full local workflow works without an API key. It includes a light interface, local SVG icons, a guided profile builder, real agent activity and conversations, source links, a weekly checklist, downloads, and offline replay.
+
+## Run locally
+
+Use **Python 3.12**. The tested Windows environment is Python 3.12.14. `requirements.lock` pins the full dependency environment; `requirements.txt` lists the direct dependencies.
+
+From the repository in PowerShell, using [uv](https://docs.astral.sh/uv/):
+
+```powershell
+uv venv --python 3.12 .venv
+uv pip sync --python .venv\Scripts\python.exe requirements.lock
+.\.venv\Scripts\python.exe -m streamlit run app.py
+```
+
+Open **http://localhost:8501**. No `.env` file is needed for local analysis or replay.
+
+With a conventional Python installation, the equivalent setup is:
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.lock
+.\.venv\Scripts\python.exe -m streamlit run app.py
+```
+
+On macOS/Linux, use `python3.12 -m venv .venv` and `.venv/bin/python` in place of the Windows interpreter path.
+
+## Use the workspace
+
+1. Paste a profile, use the guided fields, or choose one of the synthetic examples.
+2. Select opportunity types and enter the preparation hours you can commit each week. Focus areas are optional.
+3. Choose **Find my opportunities**. The workspace shows each agent starting, completing, and handing findings to another agent.
+4. Open **Your shortlist** for source links, fit explanations, eligibility conditions, and learning resources.
+5. Open **Weekly plan** for priorities, preparation dates, capacity limits, deferred opportunities, and checkable tasks.
+6. Review **Profile & skills** and correct your inputs before rerunning if anything is missing.
+7. Download your plan as Markdown or the full results as JSON. Replay your last analysis within the same session, or watch the bundled synthetic walkthrough.
+
+The step-by-step view presents actual execution events at a readable pace. If computation finishes before the walkthrough, the UI says so and offers **Open results now**. It does not delay agent computation or simulate extra work. Agent cards use readable state text and solid surfaces rather than status dots or progress bars. The conversation can be filtered by agent and by handoffs/all messages.
+
+## How the agents work
 
 ```text
-Student profile
-       |
-       +---- Scout: find relevant opportunities ----+
-       |                                             |  parallel
-       +---- Profiler: structure and score profile --+
-                          |
-                    Verifier: reject unsafe, expired, or incomplete listings
-                      |  may send doubtful listings to Scout once
-                    Matcher: check eligibility, fit, and skill gaps
-                      |
-                    Coach: rank matches and draft a preparation plan
-                      |  may ask Matcher to rerank once for a deadline clash
-                    Results: ranked plan, checklist, tips, and agent message log
+                    Student profile + preferences
+                              |
+               +--------------+--------------+
+               |                             |
+             Scout                        Profiler
+               |                             |
+               +--------------+--------------+
+                              |
+                           Verifier
+                        /             \
+             one catalog reread       checked candidates
+                 via Scout                    |
+                                           Matcher
+                                              |
+                                            Coach
+                                              |
+                       one priority review via Matcher
+                                              |
+                        Shortlist + preparation schedule
 ```
 
-The agents share one state object and append to a visible message log. Scout and Profiler run in parallel. Verifier and Coach can each initiate at most one feedback loop. Eligibility, deadlines, clash detection, and numerical scores are determined by code; an LLM is used for text parsing and explanations, not as the source of truth for those decisions.
+| Agent | What it contributes |
+| --- | --- |
+| **Scout** | Searches the local catalog by interests and selected types, deduplicates source identities before the candidate cap, ranks relevance, and rereads only challenged records. |
+| **Profiler** | Parses labelled text and prose, preserves section boundaries, normalizes skills, identifies missing evidence, and computes a transparent strength score. Optional model assistance can fill grounded text spans, not invent qualifications. |
+| **Verifier** | Validates records independently, rejects expired/fee/unsafe/suspicious entries, checks actual URL hosts, and preserves stale-source or imminent-deadline warnings after its single feedback round. |
+| **Matcher** | Applies recorded study-year/GPA/field/nationality rules, distinguishes confirmed/conditional/ineligible outcomes, explains fit and skill gaps, and responds to Coach's priority challenge. |
+| **Coach** | Prioritizes by deadline, effort and fit; asks for one review when close deadlines compete; selects up to three practical priorities and allocates preparation within the stated weekly hours. Infeasible preparation is deferred explicitly. |
 
-## Agents
+The graph waits for both Scout and Profiler before starting Verifier. Each agent emits real start/completion/failure events. A guarded boundary isolates failures, validates output shapes and ownership, and prevents mutation of shared input. Missing or broken production agents produce visible failures; they never silently become fake agents. `agents/stubs.py` remains an explicit test fixture only.
 
-| Agent | Responsibility |
-|---|---|
-| **Scout** | Find candidate opportunities by student interests and opportunity type; re-check only the requested IDs when challenged by Verifier. |
-| **Verifier** | Reject expired, incomplete, untrusted, fee-charging, or suspicious listings; flag stale or near-deadline listings for review. |
-| **Profiler** | Turn the student's pasted text into a structured profile and provide a strength score with notes. |
-| **Matcher** | Apply year, GPA, field, and nationality rules; score fit and identify skill gaps. Reply to Coach's one-time reranking request. |
-| **Coach** | Rank eligible matches by deadline and effort, detect deadline clashes, and prepare a weekly checklist and improvement tips. |
+## What the recommendations mean
 
-Each agent follows the `agent(state) -> dict` contract: return only the state keys it owns and any new messages. Failures should be reported in the message log, with safe defaults so the rest of the graph can continue.
+- **Meets recorded rules:** supplied profile evidence satisfies every structured rule available for that listing. This is not a decision by the program or a guarantee of admission.
+- **Confirm eligibility:** required profile facts, full program rules, or source freshness still need confirmation. These can appear as conditional priorities; checking the source is the first action.
+- **Outside recorded requirements:** at least one explicit rule fails. These never enter the application plan.
 
-## Data and trust
+Fit combines recorded skill overlap (50%), interest relevance (30%), and profile strength (20%). Distinct skills such as Java and JavaScript are not interchangeable. Undocumented skill requirements receive a neutral score. The strength score summarizes named skills, projects, GPA and study year; it does not predict selection.
 
-The demo is designed to use a hand-collected local dataset rather than depend on live scraping. Real opportunity records should include an official source URL and the date they were last checked. Never invent an opportunity. The only non-real entries should be two clearly marked planted test records: one expired and one charging an application fee.
+Schedules spread the provided weekly hours evenly over seven days, across a maximum of four weeks. Estimated preparation must finish by each recorded deadline. These estimates describe preparation work, not a program's duration or an official required workload. Conditional priorities start with eligibility/source confirmation. Weekly capacity is not inferred when absent from direct agent input.
 
-An opportunity record uses this shape:
+## Catalog and trust boundaries
 
-```json
-{
-  "id": "opp_001",
-  "title": "Opportunity title",
-  "org": "Organization name",
-  "type": "internship",
-  "deadline": "2026-12-15",
-  "eligibility": {
-    "min_year": 3,
-    "min_gpa": 3.0,
-    "fields": ["Computer Science"],
-    "nationalities": []
-  },
-  "required_skills": ["Python", "SQL"],
-  "effort_hours": 6,
-  "application_fee": false,
-  "source_url": "https://official-source.example/opportunity",
-  "last_checked": "2026-11-05",
-  "planted": false
-}
+`data/opportunities.json` contains **42 records**: 19 hackathons, 12 scholarships and 11 internships. Two are explicitly planted rejection fixtures: one expired and one fee-charging. Scout deduplicates a repeated source identity, so the runtime catalog has 41 unique source records before filtering. There are currently no workshop/competition records; selecting those alone produces an honest empty result.
+
+The catalog is local and manually maintained. **The app does not scrape the web or independently verify source pages.** A local reread never becomes proof of fresh official verification. Source URLs, deadlines and requirements must be confirmed on the linked pages before applying. The unplanted catalog entries explicitly mark full eligibility as incomplete; their recommendations remain conditional until those details are confirmed. Existing program dates, fees and commercial claims have not been independently revalidated during this repair.
+
+Validate the catalog with:
+
+```powershell
+.\.venv\Scripts\python.exe -m scripts.validate_data
 ```
 
-The URL above is illustrative, not a real listing. Valid types are `internship`, `scholarship`, `hackathon`, `competition`, and `workshop`. Use `"rolling"` for an opportunity without a fixed deadline. Dates use `YYYY-MM-DD`; the current date should come from `config.TODAY`.
+Warnings about incomplete eligibility and the duplicate source are intentional and visible. Structural errors cause a nonzero exit code. Invalid records are rejected individually at runtime so one bad listing does not discard valid peers.
 
-The structured profile contains a name, year, field, GPA, nationality, skills, interests, projects, `strength_score` (0–100), and `strength_notes`. Weekly availability may be supplied as `weekly_hours` or included in the student's text (for example, "10 hours per week"). A match contains an opportunity ID, eligibility result and reasons, a fit score and reasons, and skill gaps with explanations. The plan contains ranked opportunity IDs, ranks, deadlines and rationale, plus a weekly checklist and improvement tips.
+## Optional language assistance
 
-## Listing checks and matching rules
+Copy `.env.example` to `.env` only if you want a model provider. Keep `.env` local; it is ignored by Git.
 
-- Reject opportunities whose deadline has passed, required details are missing, the source URL is missing or unofficial, or scam signals are present (including application fees or guaranteed-selection claims).
-- Flag listings last checked more than 30 days ago or with a deadline within 3 days as doubtful. A doubtful listing may be returned to Scout once for re-check.
-- When offline, skip URL checks rather than rejecting a listing solely because it could not be reached.
-- Check year, GPA, field, and nationality in code, and explain each failed eligibility rule.
-- Calculate fit from skill overlap, interest match, and profile strength. Compare required skills with the student's skills and use `data/skill_map.json` to explain gaps.
-- Coach ranks eligible matches using a weighted priority score: 45% deadline urgency, 35% lower effort, and 20% Matcher fit score. Two non-expired deadlines within 5 days whose combined effort exceeds the student's stated weekly availability count as a clash; Coach may ask Matcher to rerank once. If weekly availability is missing, Coach logs that it cannot assess a clash rather than guessing.
+| Setting | Purpose |
+| --- | --- |
+| `GROQ_API_KEY`, `GROQ_MODEL` | Optional Groq API credentials and primary model. |
+| `GROQ_FALLBACK_MODEL` | Backup Groq model, tried after the primary model fails. |
+| `OLLAMA_MODEL`, `OLLAMA_URL` | Optional configured Ollama provider after Groq. No local service is contacted unless configured and assistance is enabled. |
+| `ENABLE_LLM` | Default preference for the UI's optional language-assistance control. It stays off without a configured provider. |
+| `LLM_TIMEOUT`, `LLM_RETRIES` | Per-request timeout and retry count. Temporary transport/rate-limit errors use bounded retries; failed providers fall through to the next provider. |
+| `LLM_TEMPERATURE`, `LLM_MAX_TOKENS` | Generation settings passed to configured providers. |
+| `TODAY_OVERRIDE` | Optional `YYYY-MM-DD` date for reproducible demonstrations. Otherwise uses the current Asia/Karachi date at process startup; restart a long-running server after a date change. |
+| `REPLAY_MODE` | Automatically opens the bundled synthetic walkthrough in each new browser session. It makes no agent/provider calls. |
 
-All LLM calls go through `llm.py`. The current wrapper uses Groq and returns a failure note when it is unavailable; the Coach uses a deterministic code fallback for the checklist and tips. Missing keys or provider failures should not prevent the local-data workflow from finishing. Replay mode is planned to play a saved run without API calls.
+All model calls go through `llm.py`. Models can help with grounded text parsing and study suggestions; they do not certify listings, decide eligibility, change deadlines or override the deterministic schedule. Provider failure leaves the local workflow available. Turning on assistance sends the supplied text/gap context to the configured provider; leave it off to keep analysis local.
 
-## Project layout
+## Replay and local records
+
+- `cache/demo.json` is a versioned, explicitly synthetic recording from the real five-agent pipeline, dated 7 November 2026. Its program details reflect that recording date.
+- Browser sessions hold their latest journal in memory. Private disk recordings go to ignored `cache/sessions/<session-id>/last_run.json`, not the shared demo filename.
+- Recording names and structures are validated, writes are atomic, and damaged recordings produce a clear error. A save failure leaves completed analysis available for download.
+- Session-scoped storage prevents accidental cross-session replay; it is not an account/authentication system. A new browser session does not automatically recover an earlier session's private journal.
+- Checklist completion persists through rerenders of the current plan. New analyses and different tasks receive independent completion state.
+
+Regenerate the synthetic walkthrough after changing agent behavior:
+
+```powershell
+.\.venv\Scripts\python.exe -m scripts.record_demo
+```
+
+This command uses the bundled Student A text and disables model access. It never records the current UI user's profile.
+
+## Tests and development
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q -ra
+.\.venv\Scripts\python.exe -m scripts.validate_data
+uv pip check --python .venv\Scripts\python.exe
+```
+
+The suite covers each agent, graph loops and joins, real-agent integration, capacity and deadline constraints, malformed data, missing evidence, failure isolation, grounded optional parsing, session-safe recording, and Streamlit input/replay/checklist/export flows. Tests freeze the date and disable external providers. No smoke tests skip obsolete APIs.
+
+GitHub Actions runs the same suite on Windows and Ubuntu with Python 3.12. Browser screenshot/mobile visual review is separate from the automated Streamlit runtime checks; the browser bridge was unavailable during this implementation session.
+
+To update the lock after deliberately changing dependencies:
+
+```powershell
+uv pip compile requirements.txt --python-version 3.12 --universal --output-file requirements.lock
+```
+
+Important modules:
 
 ```text
-.
-├── app.py
-├── replay.py
-├── state.py
-├── graph.py
-├── config.py
-├── llm.py
-├── agents/
-│   ├── scout.py
-│   ├── verifier.py
-│   ├── profiler.py
-│   ├── matcher.py
-│   └── coach.py
-├── data/
-│   ├── opportunities.json
-│   ├── skill_map.json
-│   └── sample_students/
-├── cache/
-├── tests/
-├── .env
-├── requirements.txt
-└── README.md
+app.py                 Streamlit workspace and user flows
+runtime.py             Background execution, event presentation and exports
+graph.py / state.py    LangGraph orchestration, lifecycle events and shared contract
+domain.py              Catalog validation and evidence normalization
+agents/                Scout, Profiler, Verifier, Matcher and Coach
+llm.py                 Optional Groq/Ollama transport and fallback
+replay.py               Validated atomic recordings and playback
+ui/                    Local SVG icons, HTML components and responsive light styles
+data/                  Catalog, skill resources and complete synthetic profiles
+tests/                 Agent, regression, integration and Streamlit tests
+PROJECT_AUDIT.md       Original 18-finding bug report and remediation status
 ```
 
-## Setup
-
-The project uses Python 3.10+, LangGraph, Streamlit, Groq, `python-dotenv`, and `pytest`.
-
-On Windows, create and activate a virtual environment:
-
-```powershell
-py -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-```
-
-Copy `.env.example` to `.env`, add your own `GROQ_API_KEY`, and adjust `GROQ_MODEL` if needed. Keep API keys out of source code and do not commit `.env`.
-
-Run the graph demo with:
-
-```powershell
-python graph.py
-```
-
-Run the tests with:
-
-```powershell
-pytest
-```
-
-`app.py` and `replay.py` are placeholders at present; `streamlit run app.py` does not launch the finished application.
-
-## Expected edge-case behavior
-
-- The graph operates on the local dataset; source URL checks are skipped when the Verifier detects that the network is unavailable.
-- Missing interests use sensible defaults; no candidate or no eligible match produces an explanation and a useful fallback plan.
-- Missing year or GPA is treated as unknown and noted in the log. Missing weekly availability is not guessed; clash detection is skipped and logged.
-- Expired and fee-charging entries are rejected with reasons; doubtful entries are re-checked at most once.
-- If Groq is unavailable or returns invalid plan JSON, Coach creates a deterministic checklist and tips without an API call.
-- An agent error is logged and should not stop the rest of the graph.
-
-## Tests and demo
-
-The pytest suite covers graph loops, agents, data validation, and smoke behavior. The sample profile files are not populated yet.
-
-The planned three-minute demo uses Student A: a third-year Computer Science student with a 3.3 GPA, Python, basic machine learning and HTML skills, one class project, and interests in AI internships and scholarships. Show Scout and Profiler running in parallel, Verifier's rejection and re-check messages, Matcher results and skill gaps, then Coach's ranked top-three plan. Replay mode and a backup recording are presentation goals, but replay is not implemented yet.
-
-## Team ownership
-
-Keep changes to another member's owned files coordinated with that owner. The planned primary ownership is:
-
-| Member | Primary work |
-|---|---|
-| M1 | Scout, shared state, graph, config, graph and Scout tests; main branch integration |
-| M2 | Verifier, verifier tests, smoke test, quality assurance |
-| M3 | Profiler, Streamlit UI, replay, sample profiles, related tests |
-| M4 | Matcher, LLM wrapper, skill map, matcher tests |
-| M5 | Coach, Coach tests, README, demo and presentation |
-
-Use one branch per member and merge into `main` when the work runs. Commit small changes and test the owned component before merging. If time is limited, cut live fetching first, then the Coach-to-Matcher loop, then hackathons and workshops. Do not cut verification, the visible message log, or replay mode.
+Work is on `ali-haider`; changes are reviewed through a pull request to `main`. This version remains a local student advisor: it does not submit applications, operate user accounts, or provide live web discovery.

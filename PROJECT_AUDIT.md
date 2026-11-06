@@ -293,3 +293,45 @@ To inspect the current UI with the prepared environment:
 ```
 
 Only this audit document has been added to the working tree. No implementation fixes, commits, or pushes have been made.
+
+## 7. Remediation on `ali-haider`
+
+The sections above preserve the original baseline. Implementation work followed on 7 November 2026, including integration of the team's newer Coach contribution from `origin/main` before extending it.
+
+| Finding | Remediation | Verification |
+| --- | --- | --- |
+| F01 | Five real agents; unavailable/broken modules report failures. Coach now schedules within capacity and explicitly defers infeasible work. | Real-agent smoke tests, Coach tests and failed-Profiler regression. |
+| F02 | Parsed, normalized host checks replace substring URL classification. | Devpost/Microsoft, uppercase shortener, irrelevant-path and unsafe-scheme regressions. |
+| F03 | Shared typed record validation and individual rejection isolate malformed records. Description scam claims are included in the checks. | Parameterized malformed-record tests retain a valid peer. |
+| F04 | Scout records local-reread evidence; stale/imminent records retain review warnings after the bounded feedback loop. | Stale second-pass regression and real graph loop tests. |
+| F05 | Verifier uses deterministic checks only. A model cannot approve/reject listing legitimacy. | Regression rejects any attempted model call during verification. |
+| F06 | Labelled profiles and prose retain field boundaries; guided entry and visible parsed details support corrections. | Section parsing, model-grounding and guided-input tests. |
+| F07 | Eligibility has eligible/conditional/ineligible states. Missing evidence cannot become confirmed eligibility; failed parsing creates no application plan. | Unknown-rule and failed-Profiler real-flow tests. |
+| F08 | Explicit skill normalization replaces substring matching; field/nationality aliases are also normalized. | Java/JavaScript, C/C++, React/React Native and alias tests. |
+| F09 | Obsolete smoke imports/skips removed. Actual agent graph and Streamlit flows are covered. | Full suite completes without skipped tests. |
+| F10 | New UI exposes source links, fit reasons, eligibility conditions, skill resources, weekly capacity, profile correction and exports. | Streamlit user-flow tests. |
+| F11 | Real-agent synthetic walkthrough replaces the old recording; replay uses an actual current-session journal or explicit demo. `REPLAY_MODE` is connected. | Validated offline replay and UI replay tests. |
+| F12 | Profiler uses the shared optional `ask` API. Groq primary/fallback and configured Ollama use the declared settings; models cannot replace the deterministic schedule. | Grounding, provider-fallback and immutable-schedule tests. Live providers were not called. |
+| F13 | Connectivity probing removed. Local analysis/replay do not call providers or skip structural URL checks. | Streamlit tests make external access fail; offline host checks still apply. |
+| F14 | Session-scoped recordings, restricted names, schema validation and atomic writes. Save failure preserves completed results. | Namespace isolation, path traversal, corruption, atomic-save and save-error tests. |
+| F15 | Guard validates returned mappings, owned shapes, messages, profiles, matches and plans; it supplies copied input and records failures. | Bad-return and nested-input-mutation regressions. |
+| F16 | Scout deduplicates source identities. Full eligibility is explicitly marked incomplete for unplanted records; undocumented skills get neutral scoring. | Deduplication and uncertainty tests. **Official program facts still require independent review.** |
+| F17 | Complete synthetic profiles, rewritten README, pinned direct dependencies/full lock, and Windows/Ubuntu CI workflow. | Strong profile scores 97, Student A 53, starter profile 9; locked installation and tests. |
+| F18 | Task keys include the current plan identity and task text. | Streamlit test preserves checks in one plan and resets them for a new analysis. |
+
+### UX changes and activity semantics
+
+The new responsive interface uses warm white, solid forest/sage surfaces and local SVG icons. It has no gradients, emojis, decorative divider lines, progress bars or status dots. Large agent cards show actual start/completion/failure events. Directed messages expose Scout/Verifier and Matcher/Coach handoffs, including feedback rounds. The optional step-by-step view walks through real events; when analysis has finished, it explicitly says the view is a walkthrough and offers immediate access to results.
+
+Profile edits survive activity-control reruns. Normal work, replay, conditional matches, no-match cases, exports and checklist state are exercised with Streamlit AppTest. The original shared `cache/last_run.json` was replaced with `cache/demo.json`; private recordings are ignored by Git and scoped to a random browser session.
+
+### Remaining boundaries
+
+- The catalog's dates, fees, program descriptions and full eligibility have not been freshly verified against official sources. The application makes that limit visible and provides source links. Live discovery and applications are outside this version.
+- Session isolation is not authenticated multi-user storage. Raw local profile recordings remain on the machine until their owner removes them; no account or recovery system is claimed.
+- The browser/computer-use bridge was unavailable. Desktop/mobile screenshots and browser visual QA could not be performed. Responsive CSS, Streamlit runtime interactions and HTTP health were checked; those checks do not substitute for visual review.
+- Optional provider code is covered by deterministic mocks; no paid/live model request was made.
+
+### Final local validation
+
+The project-local `.venv` was created from the universal `requirements.lock` with Python 3.12.14. The full suite passed: **160 tests, zero skips** (50.54 seconds in the clean environment). Dependency checking reported **68 compatible installed packages**. The dataset validator reported **42 records, zero errors and 41 warnings**: 40 incomplete-eligibility notices and one duplicate-source notice. The synthetic real-agent demo contains 28 events and no agent failures. Local Streamlit HTTP health returned `200`.
