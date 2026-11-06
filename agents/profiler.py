@@ -68,8 +68,10 @@ def _parse(text, known):
 
 def _score(p):
     score, notes = 0, []
-    score += min(len(p["skills"]), 6) * 6
-    score += min(len(p["projects"]), 3) * 10
+    n_sk, n_pr = len(p["skills"]), len(p["projects"])
+
+    score += min(n_sk, 6) * 6
+    score += min(n_pr, 3) * 10
     if p["gpa"] is not None:
         score += int(p["gpa"] / 4.0 * 20)
     else:
@@ -78,17 +80,34 @@ def _score(p):
         score += min(p["year"], 4) * 3
     else:
         notes.append("Year missing.")
-    if len(p["skills"]) < 3:
+
+    if n_sk >= 5:
+        notes.append(f"Good skill range ({n_sk} skills).")
+    elif n_sk >= 3:
+        notes.append(f"{n_sk} skills listed. Adding 2-3 more would raise the score.")
+    else:
         notes.append("Add more skills.")
-    if not p["projects"]:
+
+    if n_pr == 0:
         notes.append("Add at least one project.")
+    elif n_pr < 3:
+        notes.append(f"{n_pr} project(s). More projects would raise the score.")
+    else:
+        notes.append("Strong project portfolio.")
+
+    if p["gpa"] is not None:
+        if p["gpa"] >= 3.5:
+            notes.append("GPA is a strength.")
+        elif p["gpa"] < 3.0:
+            notes.append("GPA is below 3.0, which limits some scholarships.")
+
     return min(score, 100), notes
 
 def run(state: dict) -> dict:
     try:
-        text = (state.get("student_input") or "").strip()
+        text = re.sub(r"\s+", " ", (state.get("student_input") or "")).strip()
         if not text:
-            return {"profile": {}, "messages": [_msg("all", "error", "Empty input, no profile built.")]}
+           return {"profile": {}, "messages": [_msg("all", "error", "Empty input, no profile built.")]}
         known = _known_skills()
         p = _parse(text, known)
         if call_llm_json:
