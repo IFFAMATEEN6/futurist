@@ -1,15 +1,38 @@
+"""Verifier agent. Owner: M2.
 
-from datetime import datetime, date
+Contract (defined in state.py / graph.py):
+  Entry point : run(state) -> dict
+  Reads       : candidates (list[dict] full records), round_v (int),
+                recheck (list[str] ids, populated on recheck round),
+                offline (bool)
+  Writes      : verified (list[dict] full records),
+                rejected (list[tuple[dict, str]]  i.e. (opp_record, reason)),
+                recheck  (list[str] ids to re-check),
+                messages (list[Msg] — appended via make_msg(), never replaced)
+"""
+
+from datetime import date, datetime
 
 # ── Import guards ─────────────────────────────────────────────────────────────
-# config.py lives on Iffa's branch — not on main yet.
+# config.py lives on Iffa's branch; fall back to sensible defaults.
 try:
-    from config import TODAY
-except ImportError:
+    import config
+    _today_str = config.TODAY          # always a string "YYYY-MM-DD"
+    TODAY = date.fromisoformat(_today_str)
+except (ImportError, AttributeError, ValueError):
     TODAY = date.today()
 
-# llm.py lives on yusra-shahid — not on main yet.
-# ask() returns (result, note) — NEVER raises.
+# state.py lives on Iffa's branch; fall back to a local make_msg.
+try:
+    from state import make_msg
+except ImportError:
+    from datetime import datetime as _dt
+    def make_msg(sender, recipient, type, text):        # noqa: A002
+        return {"sender": sender, "recipient": recipient,
+                "type": type, "text": text,
+                "ts": _dt.now().isoformat(timespec="seconds")}
+
+# llm.py lives on yusra-shahid; fall back gracefully.
 try:
     from llm import ask
 except ImportError:
@@ -21,7 +44,7 @@ except ImportError:
 # ── Constants ─────────────────────────────────────────────────────────────────
 REQUIRED_FIELDS = [
     "id", "title", "org", "type",
-    "deadline", "eligibility", "source_url", "last_checked"
+    "deadline", "eligibility", "source_url", "last_checked",
 ]
 
 REJECT_REASONS = {
@@ -51,21 +74,6 @@ UNOFFICIAL_URL_PATTERNS = [
 # ─────────────────────────────────────────────────────────────────────────────
 
 
-# ── Message builder ───────────────────────────────────────────────────────────
-def _msg(sender, recipient, msg_type, text):
-    """
-    Build one message dict matching the Section 5 contract.
-    msg_type: info | result | challenge | response | reject | error
-    """
-    return {
-        "sender":    sender,
-        "recipient": recipient,
-        "type":      msg_type,
-        "text":      text,
-    }
-# ─────────────────────────────────────────────────────────────────────────────
-
-
 # ── Rule helpers ──────────────────────────────────────────────────────────────
 def _missing_fields(opp):
     return [f for f in REQUIRED_FIELDS if not opp.get(f)]
@@ -77,7 +85,7 @@ def _is_expired(deadline_str):
     try:
         return datetime.strptime(deadline_str, "%Y-%m-%d").date() < TODAY
     except ValueError:
-        return True   # unparseable date → treat as expired
+        return True   # unparseable date -> treat as expired
 
 
 def _has_fee(opp):
@@ -96,8 +104,8 @@ def _url_looks_unofficial(url):
 def _doubtful_reasons(opp):
     """
     Returns list of doubt reasons.
-    Empty list  → not doubtful.
-    Non-empty   → send back to Scout for re-check.
+    Empty list  -> not doubtful.
+    Non-empty   -> send back to Scout for re-check.
     """
     reasons = []
 
@@ -148,11 +156,10 @@ def _llm_review(opp, doubt_reasons):
         "recheck = cannot decide; Scout should verify the source\n"
     )
 
-    result, note = ask(prompt)   # unpack tuple — ask() never raises
+    result, _note = ask(prompt)   # unpack tuple — ask() never raises
 
     if result is None:
-        # All providers failed — note has the error summary
-        # Safe default: send back to Scout rather than wrongly reject
+        # All providers failed; safe default: send back to Scout
         return "recheck"
 
     answer = result.strip().lower()
@@ -161,44 +168,45 @@ def _llm_review(opp, doubt_reasons):
 
 
 # ── Main agent function ───────────────────────────────────────────────────────
-def verifier(state):
+def run(state):
     """
-    Verifier agent — called by graph.py as: verifier(state)
+    Verifier agent — called by graph.py as: run(state)
 
     Reads from state:
-        candidates          list[str]  — opportunity IDs from Scout
-        _opportunities      list[dict] — full dataset loaded by graph.py
-        round_v             int        — 0 = first pass, 1 = recheck pass
-        recheck_responses   list[str]  — IDs Scout re-confirmed (round 1 only)
-        offline             bool       — True = skip URL pattern check
+        candidates      list[dict]  — full opportunity records from Scout
+        round_v         int         — 0 = first pass, >0 = recheck pass
+        recheck         list[str]   — ids Verifier asked Scout to re-check
+                                      (non-empty on the recheck round)
+        offline         bool        — True = skip URL pattern check
 
     Returns (owns these keys only):
-        verified            list[str]        — IDs that passed all checks
-        rejected            list[dict]       — [{id, reason}, ...]
-        recheck             list[str]        — IDs sent back to Scout
-        messages            list[dict]       — appended, never replaced
+        verified        list[dict]        — full records that passed all checks
+        rejected        list[tuple]       — [(opp_record, reason_str), ...]
+        recheck         list[str]         — ids sent back to Scout
+        messages        list[Msg]         — appended, never replaced
     """
     new_messages = []
     verified     = []
     rejected     = []
-    recheck      = []
+    recheck_out  = []
 
-    # ── Which IDs to process this round ──────────────────────────────────────
     round_v = state.get("round_v", 0)
     offline = state.get("offline", False)
 
+    # Candidates is always a list of full dicts from Scout.
+    # On a recheck round, Scout has updated the records in-place;
+    # we only re-verify the ids that were originally flagged.
+    all_candidates = state.get("candidates", [])
+    opp_map = {o["id"]: o for o in all_candidates if isinstance(o, dict)}
+
     if round_v == 0:
-        ids_to_check = state.get("candidates", [])
+        ids_to_check = list(opp_map.keys())
     else:
-        # Recheck round: only the IDs Scout re-confirmed
-        ids_to_check = state.get("recheck_responses", [])
+        # Re-check round: only the ids Scout was asked to confirm
+        ids_to_check = [i for i in state.get("recheck", []) if i in opp_map]
 
-    # Build ID → opportunity lookup from full dataset
-    all_opps = state.get("_opportunities", [])
-    opp_map  = {o["id"]: o for o in all_opps}
-
-    new_messages.append(_msg(
-        "Verifier", "all", "info",
+    new_messages.append(make_msg(
+        "verifier", "all", "info",
         f"Starting verification — round {round_v + 1}, "
         f"{len(ids_to_check)} listing(s) to check."
     ))
@@ -207,12 +215,11 @@ def verifier(state):
     for opp_id in ids_to_check:
         opp = opp_map.get(opp_id)
 
-        # ID not in dataset
         if not opp:
-            rejected.append({"id": opp_id, "reason": "ID not found in dataset"})
-            new_messages.append(_msg(
-                "Verifier", "Scout", "reject",
-                f"[{opp_id}] Not found in dataset — rejected."
+            rejected.append(({"id": opp_id}, "ID not found in candidates"))
+            new_messages.append(make_msg(
+                "verifier", "scout", "reject",
+                f"[{opp_id}] Not found in candidates — rejected."
             ))
             continue
 
@@ -221,30 +228,27 @@ def verifier(state):
         # ── RULE 1: missing required fields ──────────────────────────────────
         missing = _missing_fields(opp)
         if missing:
-            rejected.append({
-                "id":     opp_id,
-                "reason": f"{REJECT_REASONS['incomplete']}: {missing}"
-            })
-            new_messages.append(_msg(
-                "Verifier", "all", "reject",
+            rejected.append((opp, f"{REJECT_REASONS['incomplete']}: {missing}"))
+            new_messages.append(make_msg(
+                "verifier", "all", "reject",
                 f"[{title}] Rejected — missing fields: {missing}"
             ))
             continue
 
         # ── RULE 2: expired deadline ──────────────────────────────────────────
         if _is_expired(opp["deadline"]):
-            rejected.append({"id": opp_id, "reason": REJECT_REASONS["expired"]})
-            new_messages.append(_msg(
-                "Verifier", "all", "reject",
+            rejected.append((opp, REJECT_REASONS["expired"]))
+            new_messages.append(make_msg(
+                "verifier", "all", "reject",
                 f"[{title}] Rejected — deadline passed ({opp['deadline']})"
             ))
             continue
 
         # ── RULE 3: application fee ───────────────────────────────────────────
         if _has_fee(opp):
-            rejected.append({"id": opp_id, "reason": REJECT_REASONS["fee"]})
-            new_messages.append(_msg(
-                "Verifier", "all", "reject",
+            rejected.append((opp, REJECT_REASONS["fee"]))
+            new_messages.append(make_msg(
+                "verifier", "all", "reject",
                 f"[{title}] Rejected — charges an application fee"
             ))
             continue
@@ -252,27 +256,27 @@ def verifier(state):
         # ── RULE 4: missing URL ───────────────────────────────────────────────
         url = opp.get("source_url", "")
         if not url:
-            rejected.append({"id": opp_id, "reason": REJECT_REASONS["no_url"]})
-            new_messages.append(_msg(
-                "Verifier", "all", "reject",
+            rejected.append((opp, REJECT_REASONS["no_url"]))
+            new_messages.append(make_msg(
+                "verifier", "all", "reject",
                 f"[{title}] Rejected — no source URL"
             ))
             continue
 
         # ── RULE 5: unofficial URL — skipped when offline ─────────────────────
         if not offline and _url_looks_unofficial(url):
-            rejected.append({"id": opp_id, "reason": REJECT_REASONS["bad_url"]})
-            new_messages.append(_msg(
-                "Verifier", "all", "reject",
+            rejected.append((opp, REJECT_REASONS["bad_url"]))
+            new_messages.append(make_msg(
+                "verifier", "all", "reject",
                 f"[{title}] Rejected — URL looks unofficial: {url}"
             ))
             continue
 
         # ── RULE 6: scam signals ──────────────────────────────────────────────
         if _has_scam_signal(opp):
-            rejected.append({"id": opp_id, "reason": REJECT_REASONS["scam"]})
-            new_messages.append(_msg(
-                "Verifier", "all", "reject",
+            rejected.append((opp, REJECT_REASONS["scam"]))
+            new_messages.append(make_msg(
+                "verifier", "all", "reject",
                 f"[{title}] Rejected — scam signal in title or org"
             ))
             continue
@@ -284,26 +288,26 @@ def verifier(state):
                 llm_verdict = _llm_review(opp, doubt)
 
                 if llm_verdict == "reject":
-                    rejected.append({
-                        "id":     opp_id,
-                        "reason": f"LLM flagged as suspicious. Doubts: {'; '.join(doubt)}"
-                    })
-                    new_messages.append(_msg(
-                        "Verifier", "all", "reject",
+                    rejected.append((
+                        opp,
+                        f"LLM flagged as suspicious. Doubts: {'; '.join(doubt)}"
+                    ))
+                    new_messages.append(make_msg(
+                        "verifier", "all", "reject",
                         f"[{title}] Rejected after LLM review — {'; '.join(doubt)}"
                     ))
 
                 elif llm_verdict == "approve":
-                    verified.append(opp_id)
-                    new_messages.append(_msg(
-                        "Verifier", "all", "result",
-                        f"[{title}] Verified ✓ (LLM approved despite: {'; '.join(doubt)})"
+                    verified.append(opp)
+                    new_messages.append(make_msg(
+                        "verifier", "all", "result",
+                        f"[{title}] Verified (LLM approved despite: {'; '.join(doubt)})"
                     ))
 
                 else:   # "recheck" — challenge Scout
-                    recheck.append(opp_id)
-                    new_messages.append(_msg(
-                        "Verifier", "Scout", "challenge",
+                    recheck_out.append(opp_id)
+                    new_messages.append(make_msg(
+                        "verifier", "scout", "challenge",
                         f"[{title}] Doubtful — please re-check source. "
                         f"Reasons: {'; '.join(doubt)}"
                     ))
@@ -311,24 +315,24 @@ def verifier(state):
                 continue   # do not fall through to verified
 
         # ── PASSED ALL CHECKS ─────────────────────────────────────────────────
-        verified.append(opp_id)
-        new_messages.append(_msg(
-            "Verifier", "all", "result",
-            f"[{title}] Verified ✓"
+        verified.append(opp)
+        new_messages.append(make_msg(
+            "verifier", "all", "result",
+            f"[{title}] Verified"
         ))
 
     # ── Summary ───────────────────────────────────────────────────────────────
-    new_messages.append(_msg(
-        "Verifier", "all", "info",
+    new_messages.append(make_msg(
+        "verifier", "all", "info",
         f"Round {round_v + 1} complete — "
         f"{len(verified)} verified, "
         f"{len(rejected)} rejected, "
-        f"{len(recheck)} sent to Scout for re-check."
+        f"{len(recheck_out)} sent to Scout for re-check."
     ))
 
     return {
         "verified": verified,
         "rejected": rejected,
-        "recheck":  recheck,
-        "messages": state.get("messages", []) + new_messages,
+        "recheck":  recheck_out,
+        "messages": new_messages,
     }
