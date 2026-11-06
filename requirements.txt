@@ -1,5 +1,4 @@
 langgraph
 streamlit
-google-genai
 python-dotenv
 pytest
