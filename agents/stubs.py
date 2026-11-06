@@ -1,9 +1,4 @@
 """Stub agents with FAKE data. Owner: M1.
-
-The team plan says M1 commits stub agents so everyone can build against a working flow
-from hour 0. graph.py uses a stub ONLY while the real agents/<name>.py has no run() yet.
-The stubs deliberately trigger both loops (Verifier -> Scout, Coach -> Matcher) so the
-whole graph and the UI can be tested before the real agents exist.
 """
 from state import make_msg
 

@@ -1,7 +1,5 @@
 """Project settings. Owner: M1.
 
-Everyone imports from here instead of hard-coding paths, limits or today's date.
-Values come from the .env file (see .env.example) with safe defaults.
 """
 import os
 from datetime import date

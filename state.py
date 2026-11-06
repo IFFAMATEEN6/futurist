@@ -1,8 +1,4 @@
-"""Shared contract. Owner: M1. FROZEN after Thursday's call.
-
-Every agent reads one OpportunityState and returns a dict with ONLY the keys it
-owns (see OWNED_KEYS) plus new messages. Do not change this file without telling everyone.
-"""
+"""Shared contract. Owner: M1. """
 import operator
 from datetime import datetime
 from typing import Annotated, Optional, TypedDict

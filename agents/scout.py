@@ -1,17 +1,4 @@
 """Scout agent. Owner: M1.
-
-Picks candidate opportunities from the dataset that match the student's interests.
-Runs IN PARALLEL with the Profiler, so it reads the raw student text (or the optional
-interests_override from the UI form), not the profile.
-
-Design rules:
-- Pure code, no LLM: instant, free, and the same answer every time.
-- The dataset is read once and cached (re-read only when the file changes), and each
-  record's searchable text is prepared once, so a run costs almost nothing.
-- Top-N selection uses a heap, so it still scales if the dataset grows to thousands.
-- Never drops expired or suspicious listings: judging them is the Verifier's job.
-- Never raises. Problems become messages in the log.
-- Re-check mode: when state["recheck"] has ids, only those records are re-read.
 """
 import copy
 import heapq

@@ -1,21 +1,4 @@
 """LangGraph workflow. Owner: M1.
-
-    START -> scout  \
-                      >-- (both finish) --> verifier --> matcher --> coach --> END
-    START -> profiler /          ^    |                     ^         |
-                                 |    +-- doubtful? --+      |         +-- clash? --+
-                                 +------ rescout <---+      +-- rematch <-----------+
-                                 (max 1 round)                (max 1 round)
-
-How it stays modular and safe:
-  * Agents are discovered by name from agents/<name>.py (list lives in state.OWNED_KEYS).
-    A missing, empty or broken agent file is replaced by a fake agent from agents/stubs.py,
-    so one member's unfinished work never blocks the others.
-  * Every agent is wrapped by guarded(): a crash only adds an error message, and any key the
-    agent does not own is dropped and reported.
-  * The two loops are counted here, so they can never run more than once.
-  * The compiled graph is cached, and Scout/Profiler run in parallel (the Profiler's network
-    wait does not slow Scout down).
 """
 import importlib
 from functools import lru_cache
