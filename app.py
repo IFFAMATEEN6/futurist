@@ -7,6 +7,7 @@ import time
 import streamlit as st
 
 import graph
+import replay
 from state import AGENT_NAMES
 
 PREREQS = {"scout": [], "profiler": [], "verifier": ["scout", "profiler"],
@@ -25,10 +26,22 @@ class Run:
         self.error = None
 
 
-def _worker(run, text):
+def _worker(run, text, replay_name=None):
+    events = []
     try:
-        for kind, name, payload in graph.stream_events(text):
+        if replay_name:
+            source = replay.replay_events(replay_name)
+        else:
+            source = graph.stream_events(text)
+        for kind, name, payload in source:
+            events.append((kind, name, payload))
             run.events.put((kind, name, payload))
+            if replay_name:
+                time.sleep(0.6)   # slow down so the cards visibly light up
+        if not replay_name:
+            final = next((p for k, n, p in events if k == "final"), None)
+            if final:
+                replay.save_run("last_run", text, events, final)
     except Exception as exc:
         run.error = str(exc)
     finally:
@@ -80,8 +93,18 @@ if not ss.online:
 
 text = st.text_area("Paste your student profile", height=160, key="student_text",
                     placeholder="I'm Ayesha, a third-year Computer Science student, GPA 3.3 ...")
-start = st.button("Start", type="primary", disabled=ss.running)
-
+c1, c2 = st.columns(2)
+start = c1.button("Start", type="primary", disabled=ss.running)
+saved = replay.list_runs()
+do_replay = c2.button("▶ Replay last saved run", disabled=ss.running or not saved)
+if do_replay and not ss.running and "last_run" in saved:
+    ss.online = True
+    ss.done_agents = set()
+    ss.messages = []
+    ss.final = None
+    ss.running = True
+    ss.run = Run()
+    threading.Thread(target=_worker, args=(ss.run, "", "last_run"), daemon=True).start()
 if start and not ss.running:
     if not text.strip():
         st.warning("Please paste a profile first.")
