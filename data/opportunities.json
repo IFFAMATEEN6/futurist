@@ -36,5 +36,460 @@
     "source_url": "https://eduopportunities.net/scholarship",
     "last_checked": "2026-11-06",
     "planted": true
+  },
+
+
+  {
+    "application_fee": false,
+    "deadline": "2026-11-10",
+    "effort_hours": 20,
+    "eligibility": {
+      "fields": [],
+      "min_gpa": 0.0,
+      "min_year": 1,
+      "nationalities": []
+    },
+    "id": "opp_m2_001",
+    "last_checked": "2026-11-06",
+    "org": "CTRL-V",
+    "planted": false,
+    "required_skills": [
+      "Python",
+      "Machine Learning",
+      "JavaScript"
+    ],
+    "source_url": "https://ctrl-v-hackathon-31831.devpost.com/rules",
+    "title": "Ctrl+V Hackathon",
+    "type": "hackathon"
+  },
+  {
+    "application_fee": false,
+    "deadline": "2026-11-15",
+    "effort_hours": 24,
+    "eligibility": {
+      "fields": [],
+      "min_gpa": 0.0,
+      "min_year": 1,
+      "nationalities": []
+    },
+    "id": "opp_m2_002",
+    "last_checked": "2026-11-06",
+    "org": "Lynbrook Engineering Club",
+    "planted": false,
+    "required_skills": [
+      "Python",
+      "HTML",
+      "JavaScript"
+    ],
+    "source_url": "https://norcal-hacks-27.devpost.com/",
+    "title": "NorCal Hacks 27",
+    "type": "hackathon"
+  },
+  {
+    "application_fee": false,
+    "deadline": "2027-01-10",
+    "effort_hours": 12,
+    "eligibility": {
+      "fields": [],
+      "min_gpa": 0.0,
+      "min_year": 1,
+      "nationalities": []
+    },
+    "id": "opp_m2_003",
+    "last_checked": "2026-11-06",
+    "org": "Checkpoint",
+    "planted": false,
+    "required_skills": [
+      "JavaScript",
+      "HTML",
+      "UI/UX Design"
+    ],
+    "source_url": "https://checkpoint-1.devpost.com/",
+    "title": "checkpoint 1 — games for good",
+    "type": "hackathon"
+  },
+  {
+    "application_fee": false,
+    "deadline": "2027-01-14",
+    "effort_hours": 30,
+    "eligibility": {
+      "fields": [],
+      "min_gpa": 0.0,
+      "min_year": 1,
+      "nationalities": []
+    },
+    "id": "opp_m2_004",
+    "last_checked": "2026-11-06",
+    "org": "Student Organization",
+    "planted": false,
+    "required_skills": [
+      "Python",
+      "Data Structures",
+      "Git"
+    ],
+    "source_url": "https://syntax-summit.devpost.com/",
+    "title": "Syntax Summit",
+    "type": "hackathon"
+  },
+  {
+    "application_fee": false,
+    "deadline": "2027-01-31",
+    "effort_hours": 20,
+    "eligibility": {
+      "fields": [],
+      "min_gpa": 0.0,
+      "min_year": 1,
+      "nationalities": []
+    },
+    "id": "opp_m2_005",
+    "last_checked": "2026-11-06",
+    "org": "Rensselaer Polytechnic Institute",
+    "planted": false,
+    "required_skills": [
+      "Python",
+      "JavaScript",
+      "Machine Learning"
+    ],
+    "source_url": "https://nsh-rpi-2027.devpost.com/",
+    "title": "NSH @RPI 2027",
+    "type": "hackathon"
+  },
+  {
+    "application_fee": false,
+    "deadline": "rolling",
+    "effort_hours": 20,
+    "eligibility": {
+      "fields": [
+        "Psychology",
+        "Human Resources"
+      ],
+      "min_gpa": 0.0,
+      "min_year": 3,
+      "nationalities": []
+    },
+    "id": "opp_m2_006",
+    "last_checked": "2026-11-06",
+    "org": "DHL Group",
+    "planted": false,
+    "required_skills": [
+      "Data Analysis",
+      "Public Speaking"
+    ],
+    "source_url": "https://aiesec.org/opportunity/global-talent/1292245",
+    "title": "Talent Acquisition Analyst",
+    "type": "internship"
+  },
+  {
+    "application_fee": false,
+    "deadline": "rolling",
+    "effort_hours": 20,
+    "eligibility": {
+      "fields": [
+        "Computer Science"
+      ],
+      "min_gpa": 0.0,
+      "min_year": 1,
+      "nationalities": []
+    },
+    "id": "opp_m2_007",
+    "last_checked": "2026-11-06",
+    "org": "Yanolja Cloud Solution",
+    "planted": false,
+    "required_skills": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "UI/UX Design"
+    ],
+    "source_url": "https://aiesec.org/opportunity/global-talent/1318468",
+    "title": "Web designing",
+    "type": "internship"
+  },
+  {
+    "application_fee": false,
+    "deadline": "2026-12-13",
+    "effort_hours": 10,
+    "eligibility": {
+      "fields": [
+        "Computer Science"
+      ],
+      "min_gpa": 0.0,
+      "min_year": 1,
+      "nationalities": []
+    },
+    "id": "opp_m2_008",
+    "last_checked": "2026-11-06",
+    "org": "Google",
+    "planted": false,
+    "required_skills": [
+      "Python",
+      "Machine Learning",
+      "Data Analysis",
+      "Research Writing"
+    ],
+    "source_url": "https://careers.google.com/jobs/results/120211620121977542",
+    "title": "Student Researcher, 2027",
+    "type": "internship"
+  },
+  {
+    "application_fee": false,
+    "deadline": "2026-11-20",
+    "effort_hours": 20,
+    "eligibility": {
+      "fields": [
+        "Computer Science",
+        "Engineering"
+      ],
+      "min_gpa": 0.0,
+      "min_year": 3,
+      "nationalities": []
+    },
+    "id": "opp_m2_009",
+    "last_checked": "2026-11-06",
+    "org": "Google",
+    "planted": false,
+    "required_skills": [
+      "Python",
+      "Machine Learning",
+      "Cloud",
+      "Data Structures"
+    ],
+    "source_url": "https://careers.google.com/jobs/results/75665705386549958",
+    "title": "Forward Deployed Engineering Intern, BS/MS, Summer 2027",
+    "type": "internship"
+  },
+  {
+    "application_fee": false,
+    "deadline": "rolling",
+    "effort_hours": 20,
+    "eligibility": {
+      "fields": [],
+      "min_gpa": 0.0,
+      "min_year": 1,
+      "nationalities": []
+    },
+    "id": "opp_m2_010",
+    "last_checked": "2026-11-06",
+    "org": "Microsoft",
+    "planted": false,
+    "required_skills": [
+      "Python",
+      "Cloud",
+      "Git"
+    ],
+    "source_url": "https://leap.microsoft.com/en-US/",
+    "title": "Microsoft Leap Apprenticeship Program",
+    "type": "internship"
+  },
+  {
+    "application_fee": false,
+    "deadline": "2026-12-14",
+    "effort_hours": 20,
+    "eligibility": {
+      "fields": [],
+      "min_gpa": 0.0,
+      "min_year": 4,
+      "nationalities": []
+    },
+    "id": "opp_m2_011",
+    "last_checked": "2026-11-06",
+    "org": "Sciences Po",
+    "planted": false,
+    "required_skills": [],
+    "source_url": "https://sciencespo.fr/students/en/fees-funding/bursaries-financial-aid/mastercard-foundation-scholarships/graduate-study/",
+    "title": "Mastercard Foundation Scholars Program at Sciences Po 2027",
+    "type": "scholarship"
+  },
+  {
+    "application_fee": false,
+    "deadline": "2027-01-15",
+    "effort_hours": 20,
+    "eligibility": {
+      "fields": [],
+      "min_gpa": 0.0,
+      "min_year": 4,
+      "nationalities": []
+    },
+    "id": "opp_m2_012",
+    "last_checked": "2026-11-06",
+    "org": "Swedish Institute",
+    "planted": false,
+    "required_skills": [],
+    "source_url": "https://si.se/en/apply/scholarships/swedish-institute-scholarships-for-global-professionals/",
+    "title": "SI Scholarship for Global Professionals 2027",
+    "type": "scholarship"
+  },
+  {
+    "application_fee": false,
+    "deadline": "2027-01-06",
+    "effort_hours": 25,
+    "eligibility": {
+      "fields": [],
+      "min_gpa": 0.0,
+      "min_year": 4,
+      "nationalities": []
+    },
+    "id": "opp_m2_013",
+    "last_checked": "2026-11-06",
+    "org": "University of Oxford",
+    "planted": false,
+    "required_skills": [],
+    "source_url": "https://www.ox.ac.uk/admissions/graduate/fees-and-funding/fees-funding-and-scholarship-search/weidenfeld-hoffmann-scholarships-and-leadership-programme",
+    "title": "Weidenfeld-Hoffmann Scholarships and Leadership Programme 2027-2028",
+    "type": "scholarship"
+  },
+  {
+    "application_fee": false,
+    "deadline": "2027-01-01",
+    "effort_hours": 8,
+    "eligibility": {
+      "fields": [],
+      "min_gpa": 0.0,
+      "min_year": 1,
+      "nationalities": []
+    },
+    "id": "opp_m2_014",
+    "last_checked": "2026-11-06",
+    "org": "Food and Agriculture Organization of the United Nations",
+    "planted": false,
+    "required_skills": [],
+    "source_url": "https://jobs.fao.org/careersection/fao_external/jobsearch.ftl?lang=en",
+    "title": "FAO Paid Internship Programme for Africa 2027",
+    "type": "internship"
+  },
+  {
+    "application_fee": false,
+    "deadline": "2026-12-04",
+    "effort_hours": 10,
+    "eligibility": {
+      "fields": [],
+      "min_gpa": 0.0,
+      "min_year": 1,
+      "nationalities": []
+    },
+    "id": "opp_m2_015",
+    "last_checked": "2026-11-06",
+    "org": "Cannes Lions",
+    "planted": false,
+    "required_skills": [
+      "UI/UX Design"
+    ],
+    "source_url": "https://www.canneslions.com/impact/lions-scholarship",
+    "title": "Cannes Lions Scholarship 2027",
+    "type": "scholarship"
+  },
+  {
+    "application_fee": false,
+    "deadline": "2026-11-30",
+    "effort_hours": 20,
+    "eligibility": {
+      "fields": [],
+      "min_gpa": 0.0,
+      "min_year": 4,
+      "nationalities": []
+    },
+    "id": "opp_m2_016",
+    "last_checked": "2026-11-06",
+    "org": "Yenching Academy, Peking University",
+    "planted": false,
+    "required_skills": [
+      "Research Writing",
+      "Public Speaking"
+    ],
+    "source_url": "https://yenchingacademy.pku.edu.cn/ADMISSIONS.htm",
+    "title": "Yenching Academy Scholarship 2027",
+    "type": "scholarship"
+  },
+  {
+    "application_fee": false,
+    "deadline": "2026-11-30",
+    "effort_hours": 15,
+    "eligibility": {
+      "fields": [],
+      "min_gpa": 0.0,
+      "min_year": 4,
+      "nationalities": []
+    },
+    "id": "opp_m2_017",
+    "last_checked": "2026-11-06",
+    "org": "ETH Zurich",
+    "planted": false,
+    "required_skills": [
+      "Research Writing"
+    ],
+    "source_url": "https://ethz.ch/en/studies/master/application/dates.html",
+    "title": "ETH Zurich Excellence Scholarship & Opportunity Programme (ESOP) 2027",
+    "type": "scholarship"
+  },
+  {
+    "application_fee": false,
+    "deadline": "2027-01-15",
+    "effort_hours": 20,
+    "eligibility": {
+      "fields": [],
+      "min_gpa": 0.0,
+      "min_year": 4,
+      "nationalities": []
+    },
+    "id": "opp_m2_018",
+    "last_checked": "2026-11-06",
+    "org": "Harvard Kennedy School, Center for Public Leadership",
+    "planted": false,
+    "required_skills": [
+      "Public Speaking",
+      "Research Writing"
+    ],
+    "source_url": "https://www.hks.harvard.edu/centers/cpl/fellowships/equity-fellowship#program-information",
+    "title": "Harvard Kennedy School Equity Fellowship 2027-2028",
+    "type": "scholarship"
+  },
+  {
+    "application_fee": false,
+    "deadline": "2026-11-15",
+    "effort_hours": 16,
+    "eligibility": {
+      "fields": [],
+      "min_gpa": 0.0,
+      "min_year": 1,
+      "nationalities": []
+    },
+    "id": "opp_m2_019",
+    "last_checked": "2026-11-06",
+    "org": "NASA",
+    "planted": false,
+    "required_skills": [
+      "Python",
+      "Data Analysis"
+    ],
+    "source_url": "https://www.spaceappschallenge.org/2026/",
+    "title": "NASA Space Apps Challenge 2026",
+    "type": "hackathon"
+  },
+  {
+    "id": "opp_m2_020",
+    "title": "PayPal AI Hackathon",
+    "org": "PayPal",
+    "type": "hackathon",
+    "deadline": "2026-11-12",
+    "eligibility": {
+      "min_year": 1,
+      "min_gpa": 0.0,
+      "fields": [],
+      "nationalities": []
+    },
+    "required_skills": [
+      "Python",
+      "Machine Learning",
+      "JavaScript"
+    ],
+    "effort_hours": 20,
+    "application_fee": false,
+    "source_url": "https://paypalaihackathon.devpost.com/",
+    "last_checked": "2026-11-06",
+    "planted": false
   }
+
 ]
+
+
+
