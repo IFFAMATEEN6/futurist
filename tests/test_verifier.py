@@ -303,17 +303,18 @@ class TestRecheckRound:
             "Verifier sent the same ID to recheck a second time — must only fire once"
         )
 
-    def test_round1_ignores_non_recheck_candidates(self):
-        """In round 1, only ids that were in state['recheck'] are processed."""
+    def test_round1_verifies_all_valid_candidates_and_does_not_recheck(self):
+        """In round 1, all candidates are processed, doubtful check is skipped, and recheck is empty."""
         opp_a = _base_opp({"id": "opp_a"})
-        opp_b = _base_opp({"id": "opp_b"})
+        old_date = (date.today() - timedelta(days=45)).strftime("%Y-%m-%d")
+        opp_b = _base_opp({"id": "opp_b", "last_checked": old_date})
 
-        # round_v=1, recheck=['opp_b'] — opp_a should be untouched
-        result = verifier(make_state([opp_a, opp_b], round_v=1, recheck=["opp_b"]))
+        result = verifier(make_state([opp_a, opp_b], round_v=1))
 
+        # Both valid candidates pass; opp_b had a stale date but in round 1 doubtful check is skipped
+        assert "opp_a" in verified_ids(result)
         assert "opp_b" in verified_ids(result)
-        assert "opp_a" not in verified_ids(result)
-        assert "opp_a" not in rejected_ids(result)
+        assert result["recheck"] == []
 
     def test_near_deadline_listing_goes_to_recheck(self):
         """A listing whose deadline is 2 days away triggers doubtful -> recheck in round 0."""

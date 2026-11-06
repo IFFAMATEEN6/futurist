@@ -199,11 +199,10 @@ def run(state):
     all_candidates = state.get("candidates", [])
     opp_map = {o["id"]: o for o in all_candidates if isinstance(o, dict)}
 
-    if round_v == 0:
-        ids_to_check = list(opp_map.keys())
-    else:
-        # Re-check round: only the ids Scout was asked to confirm
-        ids_to_check = [i for i in state.get("recheck", []) if i in opp_map]
+    # In both round 0 and round 1, evaluate all candidates.
+    # In round 1 (round_v > 0), doubtful check is skipped so confirmed
+    # listings pass directly to verified without re-triggering Loop 1.
+    ids_to_check = list(opp_map.keys())
 
     new_messages.append(make_msg(
         "verifier", "all", "info",
