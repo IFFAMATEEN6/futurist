@@ -2,7 +2,7 @@
 
 Opportunity Intelligence Network is a planned Streamlit app that helps students find and prepare for internships, scholarships, hackathons, competitions, and workshops. A student provides a profile; five collaborating agents find relevant opportunities, verify listings, assess eligibility and skill gaps, and create a ranked application plan.
 
-> **Project status:** This repository is currently a scaffold. The Python modules and agent files are empty or placeholders, `data/opportunities.json` has no records, `requirements.txt` is not populated with dependencies, and the test files do not yet contain tests. The workflow below describes the agreed target behavior; the app is not ready to run end-to-end.
+> **Project status:** The graph and five agent modules are implemented, and the opportunity dataset currently contains 42 records. The Streamlit entry point (`app.py`) and replay module (`replay.py`) are still placeholders, and the sample student files are empty, so the complete user-facing application is not ready yet.
 
 ## How the workflow is designed
 
@@ -66,7 +66,7 @@ An opportunity record uses this shape:
 
 The URL above is illustrative, not a real listing. Valid types are `internship`, `scholarship`, `hackathon`, `competition`, and `workshop`. Use `"rolling"` for an opportunity without a fixed deadline. Dates use `YYYY-MM-DD`; the current date should come from `config.TODAY`.
 
-The structured profile contains a name, year, field, GPA, nationality, skills, interests, projects, `strength_score` (0–100), and `strength_notes`. A match contains an opportunity ID, eligibility result and reasons, a fit score and reasons, and skill gaps with explanations. The plan contains ranked opportunity IDs, ranks, deadlines and rationale, plus a weekly checklist and improvement tips.
+The structured profile contains a name, year, field, GPA, nationality, skills, interests, projects, `strength_score` (0–100), and `strength_notes`. Weekly availability may be supplied as `weekly_hours` or included in the student's text (for example, "10 hours per week"). A match contains an opportunity ID, eligibility result and reasons, a fit score and reasons, and skill gaps with explanations. The plan contains ranked opportunity IDs, ranks, deadlines and rationale, plus a weekly checklist and improvement tips.
 
 ## Listing checks and matching rules
 
@@ -75,9 +75,9 @@ The structured profile contains a name, year, field, GPA, nationality, skills, i
 - When offline, skip URL checks rather than rejecting a listing solely because it could not be reached.
 - Check year, GPA, field, and nationality in code, and explain each failed eligibility rule.
 - Calculate fit from skill overlap, interest match, and profile strength. Compare required skills with the student's skills and use `data/skill_map.json` to explain gaps.
-- Rank eligible matches by deadline and effort. Deadlines within 5 days that exceed the student's available weekly hours count as a clash; Coach may ask Matcher to rerank once.
+- Coach ranks eligible matches using a weighted priority score: 45% deadline urgency, 35% lower effort, and 20% Matcher fit score. Two non-expired deadlines within 5 days whose combined effort exceeds the student's stated weekly availability count as a clash; Coach may ask Matcher to rerank once. If weekly availability is missing, Coach logs that it cannot assess a clash rather than guessing.
 
-All LLM calls should go through `llm.py`. The intended provider order is Gemini, a configured secondary provider, then Ollama, followed by a plain-code fallback. Missing keys or provider failures should produce a friendly message and not prevent the local-data workflow from finishing. Replay mode should play a saved run without API calls.
+All LLM calls go through `llm.py`. The current wrapper uses Groq and returns a failure note when it is unavailable; the Coach uses a deterministic code fallback for the checklist and tips. Missing keys or provider failures should not prevent the local-data workflow from finishing. Replay mode is planned to play a saved run without API calls.
 
 ## Project layout
 
@@ -106,9 +106,9 @@ All LLM calls should go through `llm.py`. The intended provider order is Gemini,
 └── README.md
 ```
 
-## Setup (intended)
+## Setup
 
-The planned stack is Python 3.10+, LangGraph, Streamlit, Gemini via `google-genai`, `python-dotenv`, and `pytest`.
+The project uses Python 3.10+, LangGraph, Streamlit, Groq, `python-dotenv`, and `pytest`.
 
 On Windows, create and activate a virtual environment:
 
@@ -116,35 +116,39 @@ On Windows, create and activate a virtual environment:
 py -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
-pip install langgraph streamlit google-genai python-dotenv pytest
+pip install -r requirements.txt
 ```
 
-Create a local `.env` file in the project root and configure the Gemini key and model used by `llm.py`. Add any secondary-provider credentials only if that provider is implemented. Set `REPLAY_MODE=false` for a normal run. Keep API keys out of source code and do not commit `.env`.
+Copy `.env.example` to `.env`, add your own `GROQ_API_KEY`, and adjust `GROQ_MODEL` if needed. Keep API keys out of source code and do not commit `.env`.
 
-Once `app.py`, the graph, and dependencies have been implemented, the intended commands are:
+Run the graph demo with:
 
 ```powershell
-streamlit run app.py
+python graph.py
+```
+
+Run the tests with:
+
+```powershell
 pytest
 ```
 
-These commands are not expected to provide a working app or meaningful test results with the current scaffold.
+`app.py` and `replay.py` are placeholders at present; `streamlit run app.py` does not launch the finished application.
 
 ## Expected edge-case behavior
 
-- Empty profile input does not start a run; repeated clicks do not start duplicate runs.
-- The app can finish from the local dataset without network access and shows an offline notice.
-- Missing interests use sensible defaults; no candidate or no eligible match produces a clear explanation instead of a crash.
-- Missing year or GPA is treated as unknown and noted in the log.
+- The graph operates on the local dataset; source URL checks are skipped when the Verifier detects that the network is unavailable.
+- Missing interests use sensible defaults; no candidate or no eligible match produces an explanation and a useful fallback plan.
+- Missing year or GPA is treated as unknown and noted in the log. Missing weekly availability is not guessed; clash detection is skipped and logged.
 - Expired and fee-charging entries are rejected with reasons; doubtful entries are re-checked at most once.
-- Provider failures fall back in order to another provider and then plain-code behavior. Replay runs without API calls.
+- If Groq is unavailable or returns invalid plan JSON, Coach creates a deterministic checklist and tips without an API call.
 - An agent error is logged and should not stop the rest of the graph.
 
 ## Tests and demo
 
-The planned pytest suite covers graph loops, each agent's behavior, and a smoke test. The three sample profiles are intended to cover the demo student, a strong profile, and a weaker profile.
+The pytest suite covers graph loops, agents, data validation, and smoke behavior. The sample profile files are not populated yet.
 
-The three-minute demo uses Student A: a third-year Computer Science student with a 3.3 GPA, Python, basic machine learning and HTML skills, one class project, and interests in AI internships and scholarships. Show Scout and Profiler running in parallel, Verifier's rejection and re-check messages, Matcher results and skill gaps, then Coach's ranked top-three plan. Use replay mode for a reliable presentation and keep a backup recording.
+The planned three-minute demo uses Student A: a third-year Computer Science student with a 3.3 GPA, Python, basic machine learning and HTML skills, one class project, and interests in AI internships and scholarships. Show Scout and Profiler running in parallel, Verifier's rejection and re-check messages, Matcher results and skill gaps, then Coach's ranked top-three plan. Replay mode and a backup recording are presentation goals, but replay is not implemented yet.
 
 ## Team ownership
 
