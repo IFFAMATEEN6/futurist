@@ -1,0 +1,3 @@
+I'm Ayesha, a third-year Computer Science student, GPA 3.3, from Pakistan.
+Skills: Python, Machine Learning (basic), HTML. I built one class project (a
+quiz app). I'm interested in AI internships and scholarships.

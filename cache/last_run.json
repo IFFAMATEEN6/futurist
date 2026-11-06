@@ -1,0 +1,1581 @@
+{
+  "student_input": "I'm Ayesha, a third-year Computer Science student, GPA 3.3, from Pakistan.\nSkills: Python, Machine Learning (basic), HTML. I built one class project (a\nquiz app). I'm interested in AI internships and scholarships.",
+  "events": [
+    [
+      "update",
+      "profiler",
+      {
+        "profile": {
+          "name": "Ayesha",
+          "year": 3,
+          "field": "Computer Science",
+          "gpa": 3.3,
+          "nationality": "Pakistani",
+          "skills": [
+            "Python",
+            "Machine Learning",
+            "HTML"
+          ],
+          "interests": [
+            "ai internships",
+            "scholarships"
+          ],
+          "projects": [
+            "built one class project (a quiz app)"
+          ],
+          "strength_score": 53,
+          "strength_notes": [
+            "3 skills listed. Adding 2-3 more would raise the score.",
+            "1 project(s). More projects would raise the score."
+          ]
+        },
+        "messages": [
+          {
+            "sender": "profiler",
+            "recipient": "all",
+            "type": "result",
+            "text": "Profile built. Strength 53/100."
+          }
+        ]
+      }
+    ],
+    [
+      "update",
+      "scout",
+      {
+        "candidates": [
+          {
+            "id": "opp_101",
+            "title": "Kiroween 2026 Hackathon",
+            "org": "Kiro (Amazon Web Services) via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-12-04",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 20,
+            "application_fee": false,
+            "source_url": "https://kiroween.devpost.com/rules",
+            "last_checked": "2026-11-06",
+            "description": "Online hackathon to build an app with the Kiro AI coding IDE. Submission period ends Dec 4, 2026 at 2:00 pm Pacific. Check the rules page for age and country eligibility.",
+            "planted": false
+          },
+          {
+            "id": "opp_104",
+            "title": "Global Futures Scholarship (Master's, September 2027 entry)",
+            "org": "University of Manchester",
+            "type": "scholarship",
+            "deadline": "2027-04-25",
+            "eligibility": {
+              "min_year": 4,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 8,
+            "application_fee": false,
+            "source_url": "https://www.manchester.ac.uk/study/international/country-specific-information/pakistan/scholarships/",
+            "last_checked": "2026-11-06",
+            "description": "Merit scholarship for international master's applicants. You must hold an offer for a full-time on-campus master's at Manchester and submit the scholarship form by Apr 25, 2027.",
+            "planted": false
+          },
+          {
+            "id": "opp_107",
+            "title": "Build Your First AI App",
+            "org": "Yasir Insights via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-11-27",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 15,
+            "application_fee": false,
+            "source_url": "https://build-your-first-ai-app.devpost.com/",
+            "last_checked": "2026-11-06",
+            "description": "Free beginner-friendly online AI hackathon for students: chatbots, document Q&A, study assistants. Submit by Nov 27, 2026 at 5:00 pm Eastern. Students only, adults, all countries except standard exclusions.",
+            "planted": false
+          },
+          {
+            "id": "opp_105",
+            "title": "#BuildHybridAI 2026 (Firebase AI Logic)",
+            "org": "Google via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-11-30",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 25,
+            "application_fee": false,
+            "source_url": "https://firebasehybridaihackathon.devpost.com/",
+            "last_checked": "2026-11-06",
+            "description": "Online hackathon to build AI apps that run on-device and in the cloud with Firebase AI Logic. $30,000 cash prize. Submissions open Nov 9 and close Nov 30, 2026 at 2:00 pm Pacific. Open to adults in all countries except standard exclusions.",
+            "planted": false
+          },
+          {
+            "id": "opp_108",
+            "title": "AWS MSP AI Hackathon",
+            "org": "AWS via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-12-11",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 25,
+            "application_fee": false,
+            "source_url": "https://aws-agentic-msp.devpost.com/",
+            "last_checked": "2026-11-06",
+            "description": "Online hackathon: build the AI-first managed service provider. $64,000 in prizes. Submit by Dec 11, 2026 at 3:00 pm Eastern. Eligibility not checked: confirm on the rules page.",
+            "planted": false
+          }
+        ],
+        "messages": [
+          {
+            "sender": "scout",
+            "recipient": "verifier",
+            "type": "result",
+            "text": "Found 5 candidates. Matched on types ['internship', 'scholarship'] and topics ['ai', 'web'].",
+            "ts": "2026-11-06T22:29:23"
+          }
+        ]
+      }
+    ],
+    [
+      "update",
+      "verifier",
+      {
+        "verified": [
+          {
+            "id": "opp_101",
+            "title": "Kiroween 2026 Hackathon",
+            "org": "Kiro (Amazon Web Services) via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-12-04",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 20,
+            "application_fee": false,
+            "source_url": "https://kiroween.devpost.com/rules",
+            "last_checked": "2026-11-06",
+            "description": "Online hackathon to build an app with the Kiro AI coding IDE. Submission period ends Dec 4, 2026 at 2:00 pm Pacific. Check the rules page for age and country eligibility.",
+            "planted": false
+          },
+          {
+            "id": "opp_104",
+            "title": "Global Futures Scholarship (Master's, September 2027 entry)",
+            "org": "University of Manchester",
+            "type": "scholarship",
+            "deadline": "2027-04-25",
+            "eligibility": {
+              "min_year": 4,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 8,
+            "application_fee": false,
+            "source_url": "https://www.manchester.ac.uk/study/international/country-specific-information/pakistan/scholarships/",
+            "last_checked": "2026-11-06",
+            "description": "Merit scholarship for international master's applicants. You must hold an offer for a full-time on-campus master's at Manchester and submit the scholarship form by Apr 25, 2027.",
+            "planted": false
+          },
+          {
+            "id": "opp_107",
+            "title": "Build Your First AI App",
+            "org": "Yasir Insights via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-11-27",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 15,
+            "application_fee": false,
+            "source_url": "https://build-your-first-ai-app.devpost.com/",
+            "last_checked": "2026-11-06",
+            "description": "Free beginner-friendly online AI hackathon for students: chatbots, document Q&A, study assistants. Submit by Nov 27, 2026 at 5:00 pm Eastern. Students only, adults, all countries except standard exclusions.",
+            "planted": false
+          },
+          {
+            "id": "opp_105",
+            "title": "#BuildHybridAI 2026 (Firebase AI Logic)",
+            "org": "Google via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-11-30",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 25,
+            "application_fee": false,
+            "source_url": "https://firebasehybridaihackathon.devpost.com/",
+            "last_checked": "2026-11-06",
+            "description": "Online hackathon to build AI apps that run on-device and in the cloud with Firebase AI Logic. $30,000 cash prize. Submissions open Nov 9 and close Nov 30, 2026 at 2:00 pm Pacific. Open to adults in all countries except standard exclusions.",
+            "planted": false
+          },
+          {
+            "id": "opp_108",
+            "title": "AWS MSP AI Hackathon",
+            "org": "AWS via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-12-11",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 25,
+            "application_fee": false,
+            "source_url": "https://aws-agentic-msp.devpost.com/",
+            "last_checked": "2026-11-06",
+            "description": "Online hackathon: build the AI-first managed service provider. $64,000 in prizes. Submit by Dec 11, 2026 at 3:00 pm Eastern. Eligibility not checked: confirm on the rules page.",
+            "planted": false
+          }
+        ],
+        "rejected": [],
+        "recheck": [
+          "opp_101"
+        ],
+        "messages": [
+          {
+            "sender": "verifier",
+            "recipient": "matcher",
+            "type": "result",
+            "text": "Verified 5 listings (stub).",
+            "ts": "2026-11-06T22:29:23"
+          },
+          {
+            "sender": "verifier",
+            "recipient": "scout",
+            "type": "challenge",
+            "text": "Please re-check the deadline of opp_101 (stub).",
+            "ts": "2026-11-06T22:29:23"
+          }
+        ]
+      }
+    ],
+    [
+      "update",
+      "rescout",
+      {
+        "candidates": [
+          {
+            "id": "opp_101",
+            "title": "Kiroween 2026 Hackathon",
+            "org": "Kiro (Amazon Web Services) via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-12-04",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 20,
+            "application_fee": false,
+            "source_url": "https://kiroween.devpost.com/rules",
+            "last_checked": "2026-11-06",
+            "description": "Online hackathon to build an app with the Kiro AI coding IDE. Submission period ends Dec 4, 2026 at 2:00 pm Pacific. Check the rules page for age and country eligibility.",
+            "planted": false
+          },
+          {
+            "id": "opp_104",
+            "title": "Global Futures Scholarship (Master's, September 2027 entry)",
+            "org": "University of Manchester",
+            "type": "scholarship",
+            "deadline": "2027-04-25",
+            "eligibility": {
+              "min_year": 4,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 8,
+            "application_fee": false,
+            "source_url": "https://www.manchester.ac.uk/study/international/country-specific-information/pakistan/scholarships/",
+            "last_checked": "2026-11-06",
+            "description": "Merit scholarship for international master's applicants. You must hold an offer for a full-time on-campus master's at Manchester and submit the scholarship form by Apr 25, 2027.",
+            "planted": false
+          },
+          {
+            "id": "opp_107",
+            "title": "Build Your First AI App",
+            "org": "Yasir Insights via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-11-27",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 15,
+            "application_fee": false,
+            "source_url": "https://build-your-first-ai-app.devpost.com/",
+            "last_checked": "2026-11-06",
+            "description": "Free beginner-friendly online AI hackathon for students: chatbots, document Q&A, study assistants. Submit by Nov 27, 2026 at 5:00 pm Eastern. Students only, adults, all countries except standard exclusions.",
+            "planted": false
+          },
+          {
+            "id": "opp_105",
+            "title": "#BuildHybridAI 2026 (Firebase AI Logic)",
+            "org": "Google via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-11-30",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 25,
+            "application_fee": false,
+            "source_url": "https://firebasehybridaihackathon.devpost.com/",
+            "last_checked": "2026-11-06",
+            "description": "Online hackathon to build AI apps that run on-device and in the cloud with Firebase AI Logic. $30,000 cash prize. Submissions open Nov 9 and close Nov 30, 2026 at 2:00 pm Pacific. Open to adults in all countries except standard exclusions.",
+            "planted": false
+          },
+          {
+            "id": "opp_108",
+            "title": "AWS MSP AI Hackathon",
+            "org": "AWS via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-12-11",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 25,
+            "application_fee": false,
+            "source_url": "https://aws-agentic-msp.devpost.com/",
+            "last_checked": "2026-11-06",
+            "description": "Online hackathon: build the AI-first managed service provider. $64,000 in prizes. Submit by Dec 11, 2026 at 3:00 pm Eastern. Eligibility not checked: confirm on the rules page.",
+            "planted": false
+          }
+        ],
+        "messages": [
+          {
+            "sender": "scout",
+            "recipient": "verifier",
+            "type": "response",
+            "text": "Re-checked opp_101 (Kiroween 2026 Hackathon): deadline 2026-12-04 confirmed in the dataset (last checked 2026-11-06).",
+            "ts": "2026-11-06T22:29:23"
+          }
+        ],
+        "round_v": 1,
+        "recheck": []
+      }
+    ],
+    [
+      "update",
+      "verifier",
+      {
+        "verified": [
+          {
+            "id": "opp_101",
+            "title": "Kiroween 2026 Hackathon",
+            "org": "Kiro (Amazon Web Services) via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-12-04",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 20,
+            "application_fee": false,
+            "source_url": "https://kiroween.devpost.com/rules",
+            "last_checked": "2026-11-06",
+            "description": "Online hackathon to build an app with the Kiro AI coding IDE. Submission period ends Dec 4, 2026 at 2:00 pm Pacific. Check the rules page for age and country eligibility.",
+            "planted": false
+          },
+          {
+            "id": "opp_104",
+            "title": "Global Futures Scholarship (Master's, September 2027 entry)",
+            "org": "University of Manchester",
+            "type": "scholarship",
+            "deadline": "2027-04-25",
+            "eligibility": {
+              "min_year": 4,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 8,
+            "application_fee": false,
+            "source_url": "https://www.manchester.ac.uk/study/international/country-specific-information/pakistan/scholarships/",
+            "last_checked": "2026-11-06",
+            "description": "Merit scholarship for international master's applicants. You must hold an offer for a full-time on-campus master's at Manchester and submit the scholarship form by Apr 25, 2027.",
+            "planted": false
+          },
+          {
+            "id": "opp_107",
+            "title": "Build Your First AI App",
+            "org": "Yasir Insights via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-11-27",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 15,
+            "application_fee": false,
+            "source_url": "https://build-your-first-ai-app.devpost.com/",
+            "last_checked": "2026-11-06",
+            "description": "Free beginner-friendly online AI hackathon for students: chatbots, document Q&A, study assistants. Submit by Nov 27, 2026 at 5:00 pm Eastern. Students only, adults, all countries except standard exclusions.",
+            "planted": false
+          },
+          {
+            "id": "opp_105",
+            "title": "#BuildHybridAI 2026 (Firebase AI Logic)",
+            "org": "Google via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-11-30",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 25,
+            "application_fee": false,
+            "source_url": "https://firebasehybridaihackathon.devpost.com/",
+            "last_checked": "2026-11-06",
+            "description": "Online hackathon to build AI apps that run on-device and in the cloud with Firebase AI Logic. $30,000 cash prize. Submissions open Nov 9 and close Nov 30, 2026 at 2:00 pm Pacific. Open to adults in all countries except standard exclusions.",
+            "planted": false
+          },
+          {
+            "id": "opp_108",
+            "title": "AWS MSP AI Hackathon",
+            "org": "AWS via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-12-11",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 25,
+            "application_fee": false,
+            "source_url": "https://aws-agentic-msp.devpost.com/",
+            "last_checked": "2026-11-06",
+            "description": "Online hackathon: build the AI-first managed service provider. $64,000 in prizes. Submit by Dec 11, 2026 at 3:00 pm Eastern. Eligibility not checked: confirm on the rules page.",
+            "planted": false
+          }
+        ],
+        "rejected": [],
+        "recheck": [],
+        "messages": [
+          {
+            "sender": "verifier",
+            "recipient": "matcher",
+            "type": "result",
+            "text": "Verified 5 listings (stub).",
+            "ts": "2026-11-06T22:29:23"
+          }
+        ]
+      }
+    ],
+    [
+      "update",
+      "matcher",
+      {
+        "matches": [
+          {
+            "opportunity_id": "opp_101",
+            "eligible": true,
+            "eligibility_reasons": [],
+            "score": 80,
+            "score_reasons": [
+              "stub"
+            ],
+            "gaps": []
+          },
+          {
+            "opportunity_id": "opp_104",
+            "eligible": true,
+            "eligibility_reasons": [],
+            "score": 75,
+            "score_reasons": [
+              "stub"
+            ],
+            "gaps": []
+          },
+          {
+            "opportunity_id": "opp_107",
+            "eligible": true,
+            "eligibility_reasons": [],
+            "score": 70,
+            "score_reasons": [
+              "stub"
+            ],
+            "gaps": []
+          },
+          {
+            "opportunity_id": "opp_105",
+            "eligible": true,
+            "eligibility_reasons": [],
+            "score": 65,
+            "score_reasons": [
+              "stub"
+            ],
+            "gaps": []
+          },
+          {
+            "opportunity_id": "opp_108",
+            "eligible": true,
+            "eligibility_reasons": [],
+            "score": 60,
+            "score_reasons": [
+              "stub"
+            ],
+            "gaps": []
+          }
+        ],
+        "messages": [
+          {
+            "sender": "matcher",
+            "recipient": "coach",
+            "type": "result",
+            "text": "5 eligible matches (stub).",
+            "ts": "2026-11-06T22:29:23"
+          }
+        ]
+      }
+    ],
+    [
+      "update",
+      "coach",
+      {
+        "plan": {
+          "ranked": [
+            {
+              "opportunity_id": "opp_101",
+              "rank": 1,
+              "deadline": "2026-12-04",
+              "why": "stub",
+              "effort_hours": 20
+            },
+            {
+              "opportunity_id": "opp_104",
+              "rank": 2,
+              "deadline": "2027-04-25",
+              "why": "stub",
+              "effort_hours": 8
+            },
+            {
+              "opportunity_id": "opp_107",
+              "rank": 3,
+              "deadline": "2026-11-27",
+              "why": "stub",
+              "effort_hours": 15
+            }
+          ],
+          "weekly_checklist": [
+            {
+              "week": 1,
+              "tasks": [
+                "stub task"
+              ]
+            }
+          ],
+          "improvement_tips": [
+            "stub tip"
+          ]
+        },
+        "challenge": {
+          "ids": [
+            "opp_101",
+            "opp_104"
+          ],
+          "reason": "Two deadlines clash (stub)."
+        },
+        "messages": [
+          {
+            "sender": "coach",
+            "recipient": "matcher",
+            "type": "challenge",
+            "text": "Two deadlines clash (stub).",
+            "ts": "2026-11-06T22:29:23"
+          }
+        ]
+      }
+    ],
+    [
+      "update",
+      "rematch",
+      {
+        "matches": [
+          {
+            "opportunity_id": "opp_108",
+            "eligible": true,
+            "eligibility_reasons": [],
+            "score": 60,
+            "score_reasons": [
+              "stub"
+            ],
+            "gaps": []
+          },
+          {
+            "opportunity_id": "opp_105",
+            "eligible": true,
+            "eligibility_reasons": [],
+            "score": 65,
+            "score_reasons": [
+              "stub"
+            ],
+            "gaps": []
+          },
+          {
+            "opportunity_id": "opp_107",
+            "eligible": true,
+            "eligibility_reasons": [],
+            "score": 70,
+            "score_reasons": [
+              "stub"
+            ],
+            "gaps": []
+          },
+          {
+            "opportunity_id": "opp_104",
+            "eligible": true,
+            "eligibility_reasons": [],
+            "score": 75,
+            "score_reasons": [
+              "stub"
+            ],
+            "gaps": []
+          },
+          {
+            "opportunity_id": "opp_101",
+            "eligible": true,
+            "eligibility_reasons": [],
+            "score": 80,
+            "score_reasons": [
+              "stub"
+            ],
+            "gaps": []
+          }
+        ],
+        "messages": [
+          {
+            "sender": "matcher",
+            "recipient": "coach",
+            "type": "response",
+            "text": "Re-ranked after your challenge (stub).",
+            "ts": "2026-11-06T22:29:23"
+          }
+        ],
+        "round_c": 1
+      }
+    ],
+    [
+      "update",
+      "coach",
+      {
+        "plan": {
+          "ranked": [
+            {
+              "opportunity_id": "opp_108",
+              "rank": 1,
+              "deadline": "2026-12-11",
+              "why": "stub",
+              "effort_hours": 25
+            },
+            {
+              "opportunity_id": "opp_105",
+              "rank": 2,
+              "deadline": "2026-11-30",
+              "why": "stub",
+              "effort_hours": 25
+            },
+            {
+              "opportunity_id": "opp_107",
+              "rank": 3,
+              "deadline": "2026-11-27",
+              "why": "stub",
+              "effort_hours": 15
+            }
+          ],
+          "weekly_checklist": [
+            {
+              "week": 1,
+              "tasks": [
+                "stub task"
+              ]
+            }
+          ],
+          "improvement_tips": [
+            "stub tip"
+          ]
+        },
+        "challenge": null,
+        "messages": [
+          {
+            "sender": "coach",
+            "recipient": "all",
+            "type": "result",
+            "text": "Final plan ready (stub).",
+            "ts": "2026-11-06T22:29:23"
+          }
+        ]
+      }
+    ],
+    [
+      "final",
+      null,
+      {
+        "student_input": "I'm Ayesha, a third-year Computer Science student, GPA 3.3, from Pakistan.\nSkills: Python, Machine Learning (basic), HTML. I built one class project (a\nquiz app). I'm interested in AI internships and scholarships.",
+        "interests_override": [],
+        "profile": {
+          "name": "Ayesha",
+          "year": 3,
+          "field": "Computer Science",
+          "gpa": 3.3,
+          "nationality": "Pakistani",
+          "skills": [
+            "Python",
+            "Machine Learning",
+            "HTML"
+          ],
+          "interests": [
+            "ai internships",
+            "scholarships"
+          ],
+          "projects": [
+            "built one class project (a quiz app)"
+          ],
+          "strength_score": 53,
+          "strength_notes": [
+            "3 skills listed. Adding 2-3 more would raise the score.",
+            "1 project(s). More projects would raise the score."
+          ]
+        },
+        "candidates": [
+          {
+            "id": "opp_101",
+            "title": "Kiroween 2026 Hackathon",
+            "org": "Kiro (Amazon Web Services) via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-12-04",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 20,
+            "application_fee": false,
+            "source_url": "https://kiroween.devpost.com/rules",
+            "last_checked": "2026-11-06",
+            "description": "Online hackathon to build an app with the Kiro AI coding IDE. Submission period ends Dec 4, 2026 at 2:00 pm Pacific. Check the rules page for age and country eligibility.",
+            "planted": false
+          },
+          {
+            "id": "opp_104",
+            "title": "Global Futures Scholarship (Master's, September 2027 entry)",
+            "org": "University of Manchester",
+            "type": "scholarship",
+            "deadline": "2027-04-25",
+            "eligibility": {
+              "min_year": 4,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 8,
+            "application_fee": false,
+            "source_url": "https://www.manchester.ac.uk/study/international/country-specific-information/pakistan/scholarships/",
+            "last_checked": "2026-11-06",
+            "description": "Merit scholarship for international master's applicants. You must hold an offer for a full-time on-campus master's at Manchester and submit the scholarship form by Apr 25, 2027.",
+            "planted": false
+          },
+          {
+            "id": "opp_107",
+            "title": "Build Your First AI App",
+            "org": "Yasir Insights via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-11-27",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 15,
+            "application_fee": false,
+            "source_url": "https://build-your-first-ai-app.devpost.com/",
+            "last_checked": "2026-11-06",
+            "description": "Free beginner-friendly online AI hackathon for students: chatbots, document Q&A, study assistants. Submit by Nov 27, 2026 at 5:00 pm Eastern. Students only, adults, all countries except standard exclusions.",
+            "planted": false
+          },
+          {
+            "id": "opp_105",
+            "title": "#BuildHybridAI 2026 (Firebase AI Logic)",
+            "org": "Google via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-11-30",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 25,
+            "application_fee": false,
+            "source_url": "https://firebasehybridaihackathon.devpost.com/",
+            "last_checked": "2026-11-06",
+            "description": "Online hackathon to build AI apps that run on-device and in the cloud with Firebase AI Logic. $30,000 cash prize. Submissions open Nov 9 and close Nov 30, 2026 at 2:00 pm Pacific. Open to adults in all countries except standard exclusions.",
+            "planted": false
+          },
+          {
+            "id": "opp_108",
+            "title": "AWS MSP AI Hackathon",
+            "org": "AWS via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-12-11",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 25,
+            "application_fee": false,
+            "source_url": "https://aws-agentic-msp.devpost.com/",
+            "last_checked": "2026-11-06",
+            "description": "Online hackathon: build the AI-first managed service provider. $64,000 in prizes. Submit by Dec 11, 2026 at 3:00 pm Eastern. Eligibility not checked: confirm on the rules page.",
+            "planted": false
+          }
+        ],
+        "verified": [
+          {
+            "id": "opp_101",
+            "title": "Kiroween 2026 Hackathon",
+            "org": "Kiro (Amazon Web Services) via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-12-04",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 20,
+            "application_fee": false,
+            "source_url": "https://kiroween.devpost.com/rules",
+            "last_checked": "2026-11-06",
+            "description": "Online hackathon to build an app with the Kiro AI coding IDE. Submission period ends Dec 4, 2026 at 2:00 pm Pacific. Check the rules page for age and country eligibility.",
+            "planted": false
+          },
+          {
+            "id": "opp_104",
+            "title": "Global Futures Scholarship (Master's, September 2027 entry)",
+            "org": "University of Manchester",
+            "type": "scholarship",
+            "deadline": "2027-04-25",
+            "eligibility": {
+              "min_year": 4,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 8,
+            "application_fee": false,
+            "source_url": "https://www.manchester.ac.uk/study/international/country-specific-information/pakistan/scholarships/",
+            "last_checked": "2026-11-06",
+            "description": "Merit scholarship for international master's applicants. You must hold an offer for a full-time on-campus master's at Manchester and submit the scholarship form by Apr 25, 2027.",
+            "planted": false
+          },
+          {
+            "id": "opp_107",
+            "title": "Build Your First AI App",
+            "org": "Yasir Insights via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-11-27",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 15,
+            "application_fee": false,
+            "source_url": "https://build-your-first-ai-app.devpost.com/",
+            "last_checked": "2026-11-06",
+            "description": "Free beginner-friendly online AI hackathon for students: chatbots, document Q&A, study assistants. Submit by Nov 27, 2026 at 5:00 pm Eastern. Students only, adults, all countries except standard exclusions.",
+            "planted": false
+          },
+          {
+            "id": "opp_105",
+            "title": "#BuildHybridAI 2026 (Firebase AI Logic)",
+            "org": "Google via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-11-30",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 25,
+            "application_fee": false,
+            "source_url": "https://firebasehybridaihackathon.devpost.com/",
+            "last_checked": "2026-11-06",
+            "description": "Online hackathon to build AI apps that run on-device and in the cloud with Firebase AI Logic. $30,000 cash prize. Submissions open Nov 9 and close Nov 30, 2026 at 2:00 pm Pacific. Open to adults in all countries except standard exclusions.",
+            "planted": false
+          },
+          {
+            "id": "opp_108",
+            "title": "AWS MSP AI Hackathon",
+            "org": "AWS via Devpost",
+            "type": "hackathon",
+            "deadline": "2026-12-11",
+            "eligibility": {
+              "min_year": 1,
+              "min_gpa": 0,
+              "fields": [],
+              "nationalities": []
+            },
+            "required_skills": [],
+            "effort_hours": 25,
+            "application_fee": false,
+            "source_url": "https://aws-agentic-msp.devpost.com/",
+            "last_checked": "2026-11-06",
+            "description": "Online hackathon: build the AI-first managed service provider. $64,000 in prizes. Submit by Dec 11, 2026 at 3:00 pm Eastern. Eligibility not checked: confirm on the rules page.",
+            "planted": false
+          }
+        ],
+        "rejected": [],
+        "recheck": [],
+        "matches": [
+          {
+            "opportunity_id": "opp_108",
+            "eligible": true,
+            "eligibility_reasons": [],
+            "score": 60,
+            "score_reasons": [
+              "stub"
+            ],
+            "gaps": []
+          },
+          {
+            "opportunity_id": "opp_105",
+            "eligible": true,
+            "eligibility_reasons": [],
+            "score": 65,
+            "score_reasons": [
+              "stub"
+            ],
+            "gaps": []
+          },
+          {
+            "opportunity_id": "opp_107",
+            "eligible": true,
+            "eligibility_reasons": [],
+            "score": 70,
+            "score_reasons": [
+              "stub"
+            ],
+            "gaps": []
+          },
+          {
+            "opportunity_id": "opp_104",
+            "eligible": true,
+            "eligibility_reasons": [],
+            "score": 75,
+            "score_reasons": [
+              "stub"
+            ],
+            "gaps": []
+          },
+          {
+            "opportunity_id": "opp_101",
+            "eligible": true,
+            "eligibility_reasons": [],
+            "score": 80,
+            "score_reasons": [
+              "stub"
+            ],
+            "gaps": []
+          }
+        ],
+        "challenge": null,
+        "plan": {
+          "ranked": [
+            {
+              "opportunity_id": "opp_108",
+              "rank": 1,
+              "deadline": "2026-12-11",
+              "why": "stub",
+              "effort_hours": 25
+            },
+            {
+              "opportunity_id": "opp_105",
+              "rank": 2,
+              "deadline": "2026-11-30",
+              "why": "stub",
+              "effort_hours": 25
+            },
+            {
+              "opportunity_id": "opp_107",
+              "rank": 3,
+              "deadline": "2026-11-27",
+              "why": "stub",
+              "effort_hours": 15
+            }
+          ],
+          "weekly_checklist": [
+            {
+              "week": 1,
+              "tasks": [
+                "stub task"
+              ]
+            }
+          ],
+          "improvement_tips": [
+            "stub tip"
+          ]
+        },
+        "round_v": 1,
+        "round_c": 1,
+        "messages": [
+          {
+            "sender": "system",
+            "recipient": "all",
+            "type": "info",
+            "text": "Run started",
+            "ts": "2026-11-06T22:29:23"
+          },
+          {
+            "sender": "profiler",
+            "recipient": "all",
+            "type": "result",
+            "text": "Profile built. Strength 53/100."
+          },
+          {
+            "sender": "scout",
+            "recipient": "verifier",
+            "type": "result",
+            "text": "Found 5 candidates. Matched on types ['internship', 'scholarship'] and topics ['ai', 'web'].",
+            "ts": "2026-11-06T22:29:23"
+          },
+          {
+            "sender": "verifier",
+            "recipient": "matcher",
+            "type": "result",
+            "text": "Verified 5 listings (stub).",
+            "ts": "2026-11-06T22:29:23"
+          },
+          {
+            "sender": "verifier",
+            "recipient": "scout",
+            "type": "challenge",
+            "text": "Please re-check the deadline of opp_101 (stub).",
+            "ts": "2026-11-06T22:29:23"
+          },
+          {
+            "sender": "scout",
+            "recipient": "verifier",
+            "type": "response",
+            "text": "Re-checked opp_101 (Kiroween 2026 Hackathon): deadline 2026-12-04 confirmed in the dataset (last checked 2026-11-06).",
+            "ts": "2026-11-06T22:29:23"
+          },
+          {
+            "sender": "verifier",
+            "recipient": "matcher",
+            "type": "result",
+            "text": "Verified 5 listings (stub).",
+            "ts": "2026-11-06T22:29:23"
+          },
+          {
+            "sender": "matcher",
+            "recipient": "coach",
+            "type": "result",
+            "text": "5 eligible matches (stub).",
+            "ts": "2026-11-06T22:29:23"
+          },
+          {
+            "sender": "coach",
+            "recipient": "matcher",
+            "type": "challenge",
+            "text": "Two deadlines clash (stub).",
+            "ts": "2026-11-06T22:29:23"
+          },
+          {
+            "sender": "matcher",
+            "recipient": "coach",
+            "type": "response",
+            "text": "Re-ranked after your challenge (stub).",
+            "ts": "2026-11-06T22:29:23"
+          },
+          {
+            "sender": "coach",
+            "recipient": "all",
+            "type": "result",
+            "text": "Final plan ready (stub).",
+            "ts": "2026-11-06T22:29:23"
+          }
+        ]
+      }
+    ]
+  ],
+  "final": {
+    "student_input": "I'm Ayesha, a third-year Computer Science student, GPA 3.3, from Pakistan.\nSkills: Python, Machine Learning (basic), HTML. I built one class project (a\nquiz app). I'm interested in AI internships and scholarships.",
+    "interests_override": [],
+    "profile": {
+      "name": "Ayesha",
+      "year": 3,
+      "field": "Computer Science",
+      "gpa": 3.3,
+      "nationality": "Pakistani",
+      "skills": [
+        "Python",
+        "Machine Learning",
+        "HTML"
+      ],
+      "interests": [
+        "ai internships",
+        "scholarships"
+      ],
+      "projects": [
+        "built one class project (a quiz app)"
+      ],
+      "strength_score": 53,
+      "strength_notes": [
+        "3 skills listed. Adding 2-3 more would raise the score.",
+        "1 project(s). More projects would raise the score."
+      ]
+    },
+    "candidates": [
+      {
+        "id": "opp_101",
+        "title": "Kiroween 2026 Hackathon",
+        "org": "Kiro (Amazon Web Services) via Devpost",
+        "type": "hackathon",
+        "deadline": "2026-12-04",
+        "eligibility": {
+          "min_year": 1,
+          "min_gpa": 0,
+          "fields": [],
+          "nationalities": []
+        },
+        "required_skills": [],
+        "effort_hours": 20,
+        "application_fee": false,
+        "source_url": "https://kiroween.devpost.com/rules",
+        "last_checked": "2026-11-06",
+        "description": "Online hackathon to build an app with the Kiro AI coding IDE. Submission period ends Dec 4, 2026 at 2:00 pm Pacific. Check the rules page for age and country eligibility.",
+        "planted": false
+      },
+      {
+        "id": "opp_104",
+        "title": "Global Futures Scholarship (Master's, September 2027 entry)",
+        "org": "University of Manchester",
+        "type": "scholarship",
+        "deadline": "2027-04-25",
+        "eligibility": {
+          "min_year": 4,
+          "min_gpa": 0,
+          "fields": [],
+          "nationalities": []
+        },
+        "required_skills": [],
+        "effort_hours": 8,
+        "application_fee": false,
+        "source_url": "https://www.manchester.ac.uk/study/international/country-specific-information/pakistan/scholarships/",
+        "last_checked": "2026-11-06",
+        "description": "Merit scholarship for international master's applicants. You must hold an offer for a full-time on-campus master's at Manchester and submit the scholarship form by Apr 25, 2027.",
+        "planted": false
+      },
+      {
+        "id": "opp_107",
+        "title": "Build Your First AI App",
+        "org": "Yasir Insights via Devpost",
+        "type": "hackathon",
+        "deadline": "2026-11-27",
+        "eligibility": {
+          "min_year": 1,
+          "min_gpa": 0,
+          "fields": [],
+          "nationalities": []
+        },
+        "required_skills": [],
+        "effort_hours": 15,
+        "application_fee": false,
+        "source_url": "https://build-your-first-ai-app.devpost.com/",
+        "last_checked": "2026-11-06",
+        "description": "Free beginner-friendly online AI hackathon for students: chatbots, document Q&A, study assistants. Submit by Nov 27, 2026 at 5:00 pm Eastern. Students only, adults, all countries except standard exclusions.",
+        "planted": false
+      },
+      {
+        "id": "opp_105",
+        "title": "#BuildHybridAI 2026 (Firebase AI Logic)",
+        "org": "Google via Devpost",
+        "type": "hackathon",
+        "deadline": "2026-11-30",
+        "eligibility": {
+          "min_year": 1,
+          "min_gpa": 0,
+          "fields": [],
+          "nationalities": []
+        },
+        "required_skills": [],
+        "effort_hours": 25,
+        "application_fee": false,
+        "source_url": "https://firebasehybridaihackathon.devpost.com/",
+        "last_checked": "2026-11-06",
+        "description": "Online hackathon to build AI apps that run on-device and in the cloud with Firebase AI Logic. $30,000 cash prize. Submissions open Nov 9 and close Nov 30, 2026 at 2:00 pm Pacific. Open to adults in all countries except standard exclusions.",
+        "planted": false
+      },
+      {
+        "id": "opp_108",
+        "title": "AWS MSP AI Hackathon",
+        "org": "AWS via Devpost",
+        "type": "hackathon",
+        "deadline": "2026-12-11",
+        "eligibility": {
+          "min_year": 1,
+          "min_gpa": 0,
+          "fields": [],
+          "nationalities": []
+        },
+        "required_skills": [],
+        "effort_hours": 25,
+        "application_fee": false,
+        "source_url": "https://aws-agentic-msp.devpost.com/",
+        "last_checked": "2026-11-06",
+        "description": "Online hackathon: build the AI-first managed service provider. $64,000 in prizes. Submit by Dec 11, 2026 at 3:00 pm Eastern. Eligibility not checked: confirm on the rules page.",
+        "planted": false
+      }
+    ],
+    "verified": [
+      {
+        "id": "opp_101",
+        "title": "Kiroween 2026 Hackathon",
+        "org": "Kiro (Amazon Web Services) via Devpost",
+        "type": "hackathon",
+        "deadline": "2026-12-04",
+        "eligibility": {
+          "min_year": 1,
+          "min_gpa": 0,
+          "fields": [],
+          "nationalities": []
+        },
+        "required_skills": [],
+        "effort_hours": 20,
+        "application_fee": false,
+        "source_url": "https://kiroween.devpost.com/rules",
+        "last_checked": "2026-11-06",
+        "description": "Online hackathon to build an app with the Kiro AI coding IDE. Submission period ends Dec 4, 2026 at 2:00 pm Pacific. Check the rules page for age and country eligibility.",
+        "planted": false
+      },
+      {
+        "id": "opp_104",
+        "title": "Global Futures Scholarship (Master's, September 2027 entry)",
+        "org": "University of Manchester",
+        "type": "scholarship",
+        "deadline": "2027-04-25",
+        "eligibility": {
+          "min_year": 4,
+          "min_gpa": 0,
+          "fields": [],
+          "nationalities": []
+        },
+        "required_skills": [],
+        "effort_hours": 8,
+        "application_fee": false,
+        "source_url": "https://www.manchester.ac.uk/study/international/country-specific-information/pakistan/scholarships/",
+        "last_checked": "2026-11-06",
+        "description": "Merit scholarship for international master's applicants. You must hold an offer for a full-time on-campus master's at Manchester and submit the scholarship form by Apr 25, 2027.",
+        "planted": false
+      },
+      {
+        "id": "opp_107",
+        "title": "Build Your First AI App",
+        "org": "Yasir Insights via Devpost",
+        "type": "hackathon",
+        "deadline": "2026-11-27",
+        "eligibility": {
+          "min_year": 1,
+          "min_gpa": 0,
+          "fields": [],
+          "nationalities": []
+        },
+        "required_skills": [],
+        "effort_hours": 15,
+        "application_fee": false,
+        "source_url": "https://build-your-first-ai-app.devpost.com/",
+        "last_checked": "2026-11-06",
+        "description": "Free beginner-friendly online AI hackathon for students: chatbots, document Q&A, study assistants. Submit by Nov 27, 2026 at 5:00 pm Eastern. Students only, adults, all countries except standard exclusions.",
+        "planted": false
+      },
+      {
+        "id": "opp_105",
+        "title": "#BuildHybridAI 2026 (Firebase AI Logic)",
+        "org": "Google via Devpost",
+        "type": "hackathon",
+        "deadline": "2026-11-30",
+        "eligibility": {
+          "min_year": 1,
+          "min_gpa": 0,
+          "fields": [],
+          "nationalities": []
+        },
+        "required_skills": [],
+        "effort_hours": 25,
+        "application_fee": false,
+        "source_url": "https://firebasehybridaihackathon.devpost.com/",
+        "last_checked": "2026-11-06",
+        "description": "Online hackathon to build AI apps that run on-device and in the cloud with Firebase AI Logic. $30,000 cash prize. Submissions open Nov 9 and close Nov 30, 2026 at 2:00 pm Pacific. Open to adults in all countries except standard exclusions.",
+        "planted": false
+      },
+      {
+        "id": "opp_108",
+        "title": "AWS MSP AI Hackathon",
+        "org": "AWS via Devpost",
+        "type": "hackathon",
+        "deadline": "2026-12-11",
+        "eligibility": {
+          "min_year": 1,
+          "min_gpa": 0,
+          "fields": [],
+          "nationalities": []
+        },
+        "required_skills": [],
+        "effort_hours": 25,
+        "application_fee": false,
+        "source_url": "https://aws-agentic-msp.devpost.com/",
+        "last_checked": "2026-11-06",
+        "description": "Online hackathon: build the AI-first managed service provider. $64,000 in prizes. Submit by Dec 11, 2026 at 3:00 pm Eastern. Eligibility not checked: confirm on the rules page.",
+        "planted": false
+      }
+    ],
+    "rejected": [],
+    "recheck": [],
+    "matches": [
+      {
+        "opportunity_id": "opp_108",
+        "eligible": true,
+        "eligibility_reasons": [],
+        "score": 60,
+        "score_reasons": [
+          "stub"
+        ],
+        "gaps": []
+      },
+      {
+        "opportunity_id": "opp_105",
+        "eligible": true,
+        "eligibility_reasons": [],
+        "score": 65,
+        "score_reasons": [
+          "stub"
+        ],
+        "gaps": []
+      },
+      {
+        "opportunity_id": "opp_107",
+        "eligible": true,
+        "eligibility_reasons": [],
+        "score": 70,
+        "score_reasons": [
+          "stub"
+        ],
+        "gaps": []
+      },
+      {
+        "opportunity_id": "opp_104",
+        "eligible": true,
+        "eligibility_reasons": [],
+        "score": 75,
+        "score_reasons": [
+          "stub"
+        ],
+        "gaps": []
+      },
+      {
+        "opportunity_id": "opp_101",
+        "eligible": true,
+        "eligibility_reasons": [],
+        "score": 80,
+        "score_reasons": [
+          "stub"
+        ],
+        "gaps": []
+      }
+    ],
+    "challenge": null,
+    "plan": {
+      "ranked": [
+        {
+          "opportunity_id": "opp_108",
+          "rank": 1,
+          "deadline": "2026-12-11",
+          "why": "stub",
+          "effort_hours": 25
+        },
+        {
+          "opportunity_id": "opp_105",
+          "rank": 2,
+          "deadline": "2026-11-30",
+          "why": "stub",
+          "effort_hours": 25
+        },
+        {
+          "opportunity_id": "opp_107",
+          "rank": 3,
+          "deadline": "2026-11-27",
+          "why": "stub",
+          "effort_hours": 15
+        }
+      ],
+      "weekly_checklist": [
+        {
+          "week": 1,
+          "tasks": [
+            "stub task"
+          ]
+        }
+      ],
+      "improvement_tips": [
+        "stub tip"
+      ]
+    },
+    "round_v": 1,
+    "round_c": 1,
+    "messages": [
+      {
+        "sender": "system",
+        "recipient": "all",
+        "type": "info",
+        "text": "Run started",
+        "ts": "2026-11-06T22:29:23"
+      },
+      {
+        "sender": "profiler",
+        "recipient": "all",
+        "type": "result",
+        "text": "Profile built. Strength 53/100."
+      },
+      {
+        "sender": "scout",
+        "recipient": "verifier",
+        "type": "result",
+        "text": "Found 5 candidates. Matched on types ['internship', 'scholarship'] and topics ['ai', 'web'].",
+        "ts": "2026-11-06T22:29:23"
+      },
+      {
+        "sender": "verifier",
+        "recipient": "matcher",
+        "type": "result",
+        "text": "Verified 5 listings (stub).",
+        "ts": "2026-11-06T22:29:23"
+      },
+      {
+        "sender": "verifier",
+        "recipient": "scout",
+        "type": "challenge",
+        "text": "Please re-check the deadline of opp_101 (stub).",
+        "ts": "2026-11-06T22:29:23"
+      },
+      {
+        "sender": "scout",
+        "recipient": "verifier",
+        "type": "response",
+        "text": "Re-checked opp_101 (Kiroween 2026 Hackathon): deadline 2026-12-04 confirmed in the dataset (last checked 2026-11-06).",
+        "ts": "2026-11-06T22:29:23"
+      },
+      {
+        "sender": "verifier",
+        "recipient": "matcher",
+        "type": "result",
+        "text": "Verified 5 listings (stub).",
+        "ts": "2026-11-06T22:29:23"
+      },
+      {
+        "sender": "matcher",
+        "recipient": "coach",
+        "type": "result",
+        "text": "5 eligible matches (stub).",
+        "ts": "2026-11-06T22:29:23"
+      },
+      {
+        "sender": "coach",
+        "recipient": "matcher",
+        "type": "challenge",
+        "text": "Two deadlines clash (stub).",
+        "ts": "2026-11-06T22:29:23"
+      },
+      {
+        "sender": "matcher",
+        "recipient": "coach",
+        "type": "response",
+        "text": "Re-ranked after your challenge (stub).",
+        "ts": "2026-11-06T22:29:23"
+      },
+      {
+        "sender": "coach",
+        "recipient": "all",
+        "type": "result",
+        "text": "Final plan ready (stub).",
+        "ts": "2026-11-06T22:29:23"
+      }
+    ]
+  }
+}
