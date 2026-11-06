@@ -1,0 +1,40 @@
+[
+  {
+    "id": "opp_m2_planted_expired",
+    "title": "AI Research Fellowship",
+    "org": "Global Tech Institute",
+    "type": "internship",
+    "deadline": "2025-03-01",
+    "eligibility": {
+      "min_year": 1,
+      "min_gpa": 2.5,
+      "fields": ["Computer Science"],
+      "nationalities": []
+    },
+    "required_skills": ["Python"],
+    "effort_hours": 5,
+    "application_fee": false,
+    "source_url": "https://globaltechinstitute.org/fellowship",
+    "last_checked": "2026-11-06",
+    "planted": true
+  },
+  {
+    "id": "opp_m2_planted_fee",
+    "title": "International Leadership Scholarship",
+    "org": "EduOpportunities Network",
+    "type": "scholarship",
+    "deadline": "2027-01-15",
+    "eligibility": {
+      "min_year": 1,
+      "min_gpa": 2.0,
+      "fields": [],
+      "nationalities": []
+    },
+    "required_skills": [],
+    "effort_hours": 3,
+    "application_fee": true,
+    "source_url": "https://eduopportunities.net/scholarship",
+    "last_checked": "2026-11-06",
+    "planted": true
+  }
+]
